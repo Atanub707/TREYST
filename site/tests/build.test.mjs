@@ -300,3 +300,12 @@ test('widget script stays off non-detail pages', async () => {
   const home = await readDist('index.html');
   assert.doesNotMatch(home, /anywear\.decart\.ai/);
 });
+
+test('gallery cards link to jersey detail pages (FO + EN)', async () => {
+  const fo = await readDist('roynd/index.html');
+  const en = await readDist('en/try-on/index.html');
+  assert.match(fo, /href="\/roynd\/jersey-01"/);
+  assert.match(fo, /Royn á tær/);
+  assert.match(en, /href="\/en\/try-on\/jersey-01"/);
+  assert.match(en, /Try it on/);
+});
