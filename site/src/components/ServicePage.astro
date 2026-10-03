@@ -21,7 +21,7 @@ const base = `svc.${id}`;
   lede={t(lang, `${base}.intro`)}
   image={photos[service.image]}
 />
-<CapabilityGrid title={t(lang, 'svc.capabilities')} items={t(lang, `${base}.capabilities`)} />
+<CapabilityGrid title={t(lang, 'svc.capabilities')} items={t(lang, `${base}.capabilities`)} numbered={id === 'clubshop'} />
 {id === 'printing' && <JerseyCustomizer lang={lang} />}
 <section class="bg-white pb-24">
   <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">

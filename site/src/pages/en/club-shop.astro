@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServicePage from '../../components/ServicePage.astro';
+import { t } from '../../i18n/utils.mjs';
+
+const lang = 'en';
+const id = 'clubshop';
+---
+<BaseLayout
+  lang={lang}
+  title={t(lang, `meta.${id}.title`)}
+  description={t(lang, `meta.${id}.description`)}
+  path="/en/club-shop"
+  altPath="/club-shop"
+>
+  <ServicePage lang={lang} id={id} />
+</BaseLayout>

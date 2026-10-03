@@ -116,3 +116,18 @@ test('printing page includes the jersey customizer (EN)', async () => {
   assert.match(html, /data-customizer/);
   assert.match(html, /Try it yourself/);
 });
+
+test('club shop page renders steps (FO)', async () => {
+  const html = await readDist('club-shop/index.html');
+  assert.match(html, /Club Shop til títt felag/);
+  assert.match(html, /Uppseting/);
+  assert.match(html, /Bíleggingar/);
+  assert.match(html, /01/);
+  assert.match(html, /04/);
+});
+
+test('club shop page renders steps (EN)', async () => {
+  const html = await readDist('en/club-shop/index.html');
+  assert.match(html, /A club shop for your club/);
+  assert.match(html, /Catalogue/);
+});
