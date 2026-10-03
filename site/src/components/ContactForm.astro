@@ -2,6 +2,7 @@
 import Button from './Button.astro';
 import { t } from '../i18n/utils.mjs';
 import { services } from '../data/services.mjs';
+import { jerseys } from '../data/jerseys.mjs';
 
 const { lang } = Astro.props;
 const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
@@ -23,6 +24,7 @@ const label = 'block text-sm font-semibold text-ink/70';
   data-msg-submitting={t(lang, 'form.submitting')}
   data-msg-mailto={t(lang, 'form.mailtoNote')}
   data-msg-subject={t(lang, 'form.mailSubject')}
+  data-msg-interested={t(lang, 'quote.kitInterested')}
   data-label-name={t(lang, 'form.name')}
   data-label-club={t(lang, 'form.club')}
   data-label-email={t(lang, 'form.email')}
@@ -31,6 +33,15 @@ const label = 'block text-sm font-semibold text-ink/70';
   novalidate
   class="rounded-3xl border border-ink/5 bg-fog p-8"
 >
+  <div data-kit-chip hidden class="mb-6 flex flex-wrap items-center gap-3 rounded-xl border border-brand/20 bg-brand/5 px-4 py-3">
+    <span data-kit-label class="text-sm font-semibold text-brand"></span>
+    <input type="hidden" name="kit" value="" data-kit-input />
+  </div>
+  <script
+    type="application/json"
+    data-kit-names
+    set:html={JSON.stringify(Object.fromEntries(jerseys.map((jersey) => [jersey.slug, t(lang, jersey.nameKey)])))}
+  />
   <div class="grid gap-6 sm:grid-cols-2">
     <div>
       <label class={label} for="cf-name">{t(lang, 'form.name')} *</label>
@@ -87,6 +98,24 @@ const label = 'block text-sm font-semibold text-ink/70';
     const msg = (name) => form.getAttribute(`data-msg-${name}`) || '';
     const label = (name) => form.getAttribute(`data-label-${name}`) || '';
 
+    const kitChip = form.querySelector('[data-kit-chip]');
+    const kitLabel = form.querySelector('[data-kit-label]');
+    const kitInput = form.querySelector('[data-kit-input]');
+    const kitNames = (() => {
+      try {
+        return JSON.parse(document.querySelector('[data-kit-names]')?.textContent || '{}');
+      } catch {
+        return {};
+      }
+    })();
+    const kitSlug = new URLSearchParams(window.location.search).get('kit') || '';
+    const kitName = kitNames[kitSlug] || '';
+    if (kitName) {
+      if (kitInput) kitInput.value = kitSlug;
+      if (kitLabel) kitLabel.textContent = `${form.getAttribute('data-msg-interested') || ''}: ${kitName}`;
+      if (kitChip) kitChip.removeAttribute('hidden');
+    }
+
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const data = new FormData(form);
@@ -114,6 +143,7 @@ const label = 'block text-sm font-semibold text-ink/70';
         email,
         phone: String(data.get('phone') || '').trim(),
         topic: String(data.get('topic') || ''),
+        kit: kitInput?.value || undefined,
         message,
       };
 
@@ -122,7 +152,7 @@ const label = 'block text-sm font-semibold text-ink/70';
       if (!endpoint) {
         const subject = encodeURIComponent(`${msg('subject')} ${name}`);
         const body = encodeURIComponent(
-          `${label('name')}: ${name}\n${label('club')}: ${payload.club}\n${label('email')}: ${email}\n${label('phone')}: ${payload.phone}\n${label('topic')}: ${payload.topic}\n\n${message}`
+          `${label('name')}: ${name}\n${label('club')}: ${payload.club}\n${label('email')}: ${email}\n${label('phone')}: ${payload.phone}\n${label('topic')}: ${payload.topic}\n${payload.kit ? `Kit: ${kitName || payload.kit}\n` : ''}\n${message}`
         );
         window.location.href = `mailto:info@treyst.fo?subject=${subject}&body=${body}`;
         status.textContent = msg('mailto');

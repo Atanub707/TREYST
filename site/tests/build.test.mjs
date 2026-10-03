@@ -249,3 +249,10 @@ test('apparel page links to the try-on collection (FO)', async () => {
   assert.match(html, /href="\/roynd"/);
   assert.match(html, /Sí savnið/);
 });
+
+test('contact page renders the kit chip markup', async () => {
+  const html = await readDist('samband/index.html');
+  assert.match(html, /data-kit-chip/);
+  assert.match(html, /name="kit"/);
+  assert.match(html, /data-kit-names/);
+});
