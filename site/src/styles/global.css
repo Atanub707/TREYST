@@ -44,3 +44,14 @@ p { text-wrap: pretty; }
 .js [data-reveal][data-reveal-delay="3"] { transition-delay: 300ms; }
 
 img { max-width: 100%; height: auto; }
+
+.site-nav {
+  transition: background-color 200ms ease, border-color 200ms ease;
+  border-bottom: 1px solid transparent;
+}
+.site-nav.is-scrolled {
+  background: color-mix(in srgb, var(--color-fjord) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom-color: rgb(255 255 255 / 0.08);
+}
+dialog::backdrop { background: var(--color-fjord); }

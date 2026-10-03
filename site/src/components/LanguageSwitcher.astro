@@ -1,0 +1,13 @@
+---
+import { switchLocalePath, t } from '../i18n/utils.mjs';
+
+const { lang } = Astro.props;
+const target = lang === 'fo' ? 'en' : 'fo';
+const targetPath = switchLocalePath(Astro.url.pathname, target);
+---
+<a
+  href={targetPath}
+  hreflang={target}
+  aria-label={t(lang, 'lang.switchLabel')}
+  class="inline-flex h-9 min-w-9 items-center justify-center rounded-full border border-white/20 px-3 text-xs font-semibold tracking-wider text-white transition-colors hover:border-white/50"
+>{t(lang, 'lang.switch')}</a>

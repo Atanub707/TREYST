@@ -1,0 +1,99 @@
+---
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { t, localizePath } from '../i18n/utils.mjs';
+import { services } from '../data/services.mjs';
+
+const { lang } = Astro.props;
+const home = localizePath('/', lang);
+const about = localizePath('/um-okkum', lang);
+const contact = localizePath('/samband', lang);
+const items = services.map((s) => ({
+  id: s.id,
+  href: localizePath(s.slugs.fo, lang),
+  label: t(lang, `${s.key}.title`),
+}));
+const link = 'text-sm font-medium text-white/80 transition-colors hover:text-white';
+---
+<header class="site-nav fixed inset-x-0 top-0 z-50" data-nav>
+  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <a href={home} class="font-display text-2xl font-extrabold tracking-[0.08em] text-white" aria-label="TREYST">TREYST</a>
+
+    <nav class="hidden items-center gap-8 md:flex" aria-label={t(lang, 'nav.services')}>
+      <a href={home} class={link}>{t(lang, 'nav.home')}</a>
+      <div class="group relative">
+        <button type="button" class={`${link} inline-flex items-center gap-1`} aria-haspopup="true">
+          {t(lang, 'nav.services')}
+          <Icon name="chevron" class="h-4 w-4" />
+        </button>
+        <div class="invisible absolute left-1/2 top-full w-60 -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+          <div class="rounded-2xl border border-white/10 bg-fjord-soft p-2 shadow-2xl">
+            {items.map((item) => (
+              <a href={item.href} class="block rounded-xl px-4 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-white">
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+      <a href={about} class={link}>{t(lang, 'nav.about')}</a>
+      <a href={contact} class={link}>{t(lang, 'nav.contact')}</a>
+    </nav>
+
+    <div class="hidden items-center gap-4 md:flex">
+      <LanguageSwitcher lang={lang} />
+      <Button href={contact} variant="primary" class="px-5 py-2.5 text-sm">{t(lang, 'nav.cta')}</Button>
+    </div>
+
+    <div class="flex items-center gap-3 md:hidden">
+      <LanguageSwitcher lang={lang} />
+      <button type="button" class="text-white" aria-label={t(lang, 'nav.menu.open')} data-menu-open>
+        <Icon name="menu" class="h-7 w-7" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog data-menu class="h-dvh w-full max-w-none bg-fjord p-0 text-white backdrop:bg-fjord">
+  <div class="flex h-dvh flex-col overflow-y-auto px-6 py-6">
+    <div class="flex items-center justify-between">
+      <span class="font-display text-2xl font-extrabold tracking-[0.08em]">TREYST</span>
+      <button type="button" aria-label={t(lang, 'nav.menu.close')} data-menu-close class="text-white">
+        <Icon name="close" class="h-7 w-7" />
+      </button>
+    </div>
+    <nav class="mt-10 flex flex-col gap-6 text-2xl font-display font-bold" aria-label={t(lang, 'nav.services')}>
+      <a href={home} class="hover:text-brand-bright">{t(lang, 'nav.home')}</a>
+      <div>
+        <div class="text-base font-semibold uppercase tracking-wider text-white/50">{t(lang, 'nav.services')}</div>
+        <div class="mt-3 flex flex-col gap-3 text-xl">
+          {items.map((item) => (
+            <a href={item.href} class="hover:text-brand-bright">{item.label}</a>
+          ))}
+        </div>
+      </div>
+      <a href={about} class="hover:text-brand-bright">{t(lang, 'nav.about')}</a>
+      <a href={contact} class="hover:text-brand-bright">{t(lang, 'nav.contact')}</a>
+    </nav>
+    <div class="mt-auto pt-10">
+      <Button href={contact} variant="primary" class="w-full">{t(lang, 'nav.cta')}</Button>
+      <div class="mt-6 flex items-center gap-3 text-sm text-white/60">
+        <Icon name="mail" class="h-4 w-4" />
+        <a href="mailto:info@treyst.fo" class="hover:text-white">{t(lang, 'contact.emailValue')}</a>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const header = document.querySelector('[data-nav]');
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 24);
+  onScroll();
+  addEventListener('scroll', onScroll, { passive: true });
+
+  const dialog = document.querySelector('[data-menu]');
+  document.querySelector('[data-menu-open]')?.addEventListener('click', () => dialog?.showModal());
+  document.querySelector('[data-menu-close]')?.addEventListener('click', () => dialog?.close());
+  dialog?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => dialog.close()));
+</script>

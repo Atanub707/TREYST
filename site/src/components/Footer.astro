@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { t, localizePath } from '../i18n/utils.mjs';
+import { services } from '../data/services.mjs';
+
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+const items = services.map((s) => ({
+  href: localizePath(s.slugs.fo, lang),
+  label: t(lang, `${s.key}.title`),
+}));
+const pages = [
+  { href: localizePath('/um-okkum', lang), label: t(lang, 'nav.about') },
+  { href: localizePath('/samband', lang), label: t(lang, 'nav.contact') },
+];
+const legal = [
+  { href: localizePath('/treytir', lang), label: t(lang, 'footer.terms') },
+  { href: localizePath('/privatlivspolitikkur', lang), label: t(lang, 'footer.privacy') },
+];
+const heading = 'text-sm font-semibold uppercase tracking-wider text-white';
+const link = 'text-sm text-white/70 transition-colors hover:text-white';
+---
+<footer class="bg-fjord">
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <div class="font-display text-2xl font-extrabold tracking-[0.08em] text-white">TREYST</div>
+        <p class="mt-3 max-w-xs text-sm text-white/70">{t(lang, 'brand.tagline')}</p>
+      </div>
+      <div>
+        <h3 class={heading}>{t(lang, 'footer.services')}</h3>
+        <ul class="mt-4 space-y-2">
+          {items.map((item) => <li><a href={item.href} class={link}>{item.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h3 class={heading}>{t(lang, 'footer.pages')}</h3>
+        <ul class="mt-4 space-y-2">
+          {pages.map((item) => <li><a href={item.href} class={link}>{item.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h3 class={heading}>{t(lang, 'footer.contact')}</h3>
+        <ul class="mt-4 space-y-3 text-sm text-white/70">
+          <li class="flex items-center gap-2">
+            <Icon name="mail" class="h-4 w-4 shrink-0" />
+            <a href="mailto:info@treyst.fo" class="transition-colors hover:text-white">{t(lang, 'contact.emailValue')}</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="phone" class="h-4 w-4 shrink-0" />
+            <a href="tel:+298504082" class="transition-colors hover:text-white">{t(lang, 'contact.phoneValue')}</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="pin" class="h-4 w-4 shrink-0" />
+            <span>{t(lang, 'contact.locationValue')}</span>
+          </li>
+        </ul>
+        <div class="mt-5"><LanguageSwitcher lang={lang} /></div>
+      </div>
+    </div>
+    <div class="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center">
+      <p>© {year} TREYST · {t(lang, 'contact.locationValue')}. {t(lang, 'footer.rights')}</p>
+      <ul class="flex flex-wrap gap-4">
+        {legal.map((item) => <li><a href={item.href} class="transition-colors hover:text-white">{item.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+</footer>

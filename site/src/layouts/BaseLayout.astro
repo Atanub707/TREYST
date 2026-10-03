@@ -1,9 +1,12 @@
 ---
 import '../styles/global.css';
 import SeoHead from '../components/SeoHead.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { t } from '../i18n/utils.mjs';
 
 const { lang = 'fo', title, description, path, altPath } = Astro.props;
-const skip = lang === 'fo' ? 'Hoppa til innihalds' : 'Skip to content';
+const skip = t(lang, 'skip');
 ---
 <!doctype html>
 <html lang={lang}>
@@ -16,7 +19,9 @@ const skip = lang === 'fo' ? 'Hoppa til innihalds' : 'Skip to content';
   </head>
   <body>
     <a href="#main" class="skip-link">{skip}</a>
+    <Nav lang={lang} />
     <main id="main"><slot /></main>
+    <Footer lang={lang} />
     <script>
       const els = document.querySelectorAll('[data-reveal]');
       const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;

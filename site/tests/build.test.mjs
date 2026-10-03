@@ -33,3 +33,17 @@ test('layout has skip link, main landmark and reveal contract', async () => {
   assert.match(html, /<main id="main">/);
   assert.match(html, /classList\.add\('js'\)/);
 });
+
+test('nav and footer render on home', async () => {
+  const html = await readDist('index.html');
+  assert.match(html, /data-nav/);
+  assert.match(html, /Heim/);
+  assert.match(html, /info@treyst\.fo/);
+  assert.match(html, /href="\/en\/"/);
+});
+
+test('english nav links point to english pages', async () => {
+  const html = await readDist('en/index.html');
+  assert.match(html, /href="\/en\/about"/);
+  assert.match(html, /href="\/en\/contact"/);
+});

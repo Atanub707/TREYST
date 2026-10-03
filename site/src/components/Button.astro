@@ -1,0 +1,16 @@
+---
+const { href, type, variant = 'primary', class: className = '' } = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-base font-semibold transition-colors';
+const variants = {
+  primary: 'bg-brand text-white hover:bg-brand/90',
+  'ghost-light': 'border-2 border-white/25 text-white hover:border-white/40 hover:bg-white/10',
+  'ghost-dark': 'border-2 border-ink/15 text-ink hover:bg-ink/5',
+  'on-brand': 'bg-white text-fjord hover:bg-fog',
+};
+const cls = `${base} ${variants[variant]} ${className}`;
+---
+{href
+  ? <a href={href} class={cls}><slot /></a>
+  : <button type={type ?? 'submit'} class={cls}><slot /></button>}
