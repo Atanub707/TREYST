@@ -48,8 +48,8 @@ Static build — deploy `site/dist/` anywhere:
 `/roynd` (EN: `/en/try-on`) shows the jersey collection. Each card links to the quote form with
 `?kit=<slug>`, which prefills "Interested in: <name>".
 
-- Swap jerseys: replace files in `site/src/assets/jerseys/` (same names), update `src/data/jerseys.mjs`
-  and the names in `src/i18n/ui.mjs` (`jersey.n1`…), and refresh `CREDITS.md`.
+- Swap jerseys: replace files in `site/src/assets/jerseys/` (same names), update `site/src/data/jerseys.mjs`
+  and the names in `site/src/i18n/ui.mjs` (`jersey.n1`…), and refresh `site/src/assets/jerseys/CREDITS.md`.
 - Phase B: the live try-on (Anywear widget) is wired when the client's Anywear account/script exists —
   the jersey data is already shaped for it (slug + image).
 

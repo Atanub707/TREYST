@@ -25,5 +25,3 @@ export const jerseys = [
   { slug: 'jersey-11', image: jersey11, nameKey: 'jersey.n11' },
   { slug: 'jersey-12', image: jersey12, nameKey: 'jersey.n12' },
 ];
-
-export const jerseyBySlug = (slug) => jerseys.find((jersey) => jersey.slug === slug);

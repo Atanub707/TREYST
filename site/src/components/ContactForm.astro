@@ -30,6 +30,7 @@ const label = 'block text-sm font-semibold text-ink/70';
   data-label-email={t(lang, 'form.email')}
   data-label-phone={t(lang, 'form.phone')}
   data-label-topic={t(lang, 'form.topic')}
+  data-label-kit={t(lang, 'form.kit')}
   novalidate
   class="rounded-3xl border border-ink/5 bg-fog p-8"
 >
@@ -152,7 +153,7 @@ const label = 'block text-sm font-semibold text-ink/70';
       if (!endpoint) {
         const subject = encodeURIComponent(`${msg('subject')} ${name}`);
         const body = encodeURIComponent(
-          `${label('name')}: ${name}\n${label('club')}: ${payload.club}\n${label('email')}: ${email}\n${label('phone')}: ${payload.phone}\n${label('topic')}: ${payload.topic}\n${payload.kit ? `Kit: ${kitName || payload.kit}\n` : ''}\n${message}`
+          `${label('name')}: ${name}\n${label('club')}: ${payload.club}\n${label('email')}: ${email}\n${label('phone')}: ${payload.phone}\n${label('topic')}: ${payload.topic}\n${payload.kit ? `${label('kit')}: ${kitName || payload.kit}\n` : ''}\n${message}`
         );
         window.location.href = `mailto:info@treyst.fo?subject=${subject}&body=${body}`;
         status.textContent = msg('mailto');
@@ -171,7 +172,9 @@ const label = 'block text-sm font-semibold text-ink/70';
           body: JSON.stringify(payload),
         });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const kitValue = kitInput ? kitInput.value : '';
         form.reset();
+        if (kitInput && kitValue) kitInput.value = kitValue;
         status.textContent = msg('success');
         status.className = 'text-sm font-medium text-brand';
       } catch {

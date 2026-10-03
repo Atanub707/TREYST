@@ -1,6 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { access } from 'node:fs/promises';
+import { access, readdir, readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import sharp from 'sharp';
 import { readDist, exists } from './helpers.mjs';
 
 test('home page builds', async () => {
@@ -203,8 +205,18 @@ test('hreflang pairs are reciprocal on every page', async () => {
 test('jersey assets exist and are non-trivial', async () => {
   const url = new URL('../src/data/jerseys.mjs', import.meta.url);
   await access(url); // throws if missing
-  const credits = new URL('../src/assets/jerseys/CREDITS.md', import.meta.url);
-  await access(credits);
+  const dir = new URL('../src/assets/jerseys/', import.meta.url);
+  const files = (await readdir(dir)).filter((file) => /^jersey-.*\.jpg$/.test(file));
+  assert.equal(files.length, 12, 'expected exactly 12 jersey images');
+  for (const file of files) {
+    const meta = await sharp(fileURLToPath(new URL(file, dir))).metadata();
+    assert.ok(
+      Math.max(meta.width ?? 0, meta.height ?? 0) >= 1200,
+      `${file} long edge should be at least 1200px`
+    );
+  }
+  const credits = await readFile(new URL('../src/assets/jerseys/CREDITS.md', import.meta.url), 'utf8');
+  assert.ok((credits.match(/https:\/\//g) || []).length >= 12, 'CREDITS.md should list at least 12 sources');
 });
 
 test('sitemap, robots and JSON-LD are present', async () => {
@@ -242,12 +254,25 @@ test('try-on page renders the gallery (EN)', async () => {
   assert.match(html, /<html lang="en"/);
   assert.match(html, /Try the kit on you/);
   assert.match(html, /href="\/en\/contact\?kit=jersey-01"/);
+  assert.equal((html.match(/data-jersey-card/g) || []).length, 12);
 });
 
 test('apparel page links to the try-on collection (FO)', async () => {
   const html = await readDist('klaedir/index.html');
   assert.match(html, /href="\/roynd"/);
   assert.match(html, /Sí savnið/);
+});
+
+test('try-on band is apparel-only', async () => {
+  const apparel = await readDist('klaedir/index.html');
+  const equipment = await readDist('utgerd/index.html');
+  const apparelMain = apparel.split('<main id="main">')[1]?.split('</main>')[0] ?? '';
+  const equipmentMain = equipment.split('<main id="main">')[1]?.split('</main>')[0] ?? '';
+  assert.match(apparel, /href="\/roynd"/);
+  assert.match(apparel, /Sí savnið/);
+  assert.match(apparelMain, /href="\/roynd"/);
+  assert.doesNotMatch(equipmentMain, /href="\/roynd"/);
+  assert.doesNotMatch(equipmentMain, /Sí savnið/);
 });
 
 test('contact page renders the kit chip markup', async () => {
