@@ -1,0 +1,14 @@
+---
+const { eyebrow, title, lede, align = 'left', dark = false } = Astro.props;
+const centered = align === 'center';
+---
+<div class:list={['max-w-3xl', centered && 'mx-auto text-center']}>
+  {eyebrow && (
+    <div class:list={['mb-4 flex items-center gap-4', centered && 'justify-center']}>
+      <span class:list={['h-px w-12', dark ? 'bg-brand-bright' : 'bg-brand']} />
+      <span class:list={['text-sm font-semibold uppercase tracking-wider', dark ? 'text-brand-bright' : 'text-brand']}>{eyebrow}</span>
+    </div>
+  )}
+  <h2 class:list={['text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl', dark ? 'text-white' : 'text-ink']}>{title}</h2>
+  {lede && <p class:list={['mt-5 text-lg', dark ? 'text-white/70' : 'text-ink/70']}>{lede}</p>}
+</div>

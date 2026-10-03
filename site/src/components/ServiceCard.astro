@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { photos } from '../data/photos.mjs';
+import { t } from '../i18n/utils.mjs';
+
+const { lang, service } = Astro.props;
+const title = t(lang, `${service.key}.title`);
+const desc = t(lang, `${service.key}.desc`);
+const href = service.slugs[lang] ?? service.slugs.fo;
+---
+<a
+  href={href}
+  class="group flex h-full flex-col overflow-hidden rounded-3xl border border-ink/5 bg-white transition-shadow duration-300 hover:shadow-xl"
+>
+  <div class="relative aspect-[4/3] overflow-hidden">
+    <Image
+      src={photos[service.image]}
+      alt=""
+      widths={[480, 800]}
+      sizes="(min-width: 1024px) 40vw, 100vw"
+      loading="lazy"
+      class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+  </div>
+  <div class="flex flex-1 flex-col p-7">
+    <div class="flex items-center gap-3">
+      <Icon name={service.icon} class="h-6 w-6 shrink-0 text-brand" />
+      <h3 class="text-2xl font-bold text-ink">{title}</h3>
+    </div>
+    <p class="mt-3 flex-1 leading-relaxed text-ink/70">{desc}</p>
+    <span class="mt-6 inline-flex items-center gap-2 font-semibold text-brand">
+      {t(lang, 'common.learnMore')}
+      <Icon name="arrow" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+    </span>
+  </div>
+</a>

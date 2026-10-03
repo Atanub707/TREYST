@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import Reveal from './Reveal.astro';
+import { photos } from '../data/photos.mjs';
+import { t, localizePath } from '../i18n/utils.mjs';
+
+const { lang } = Astro.props;
+const contact = localizePath('/samband', lang);
+---
+<section class="relative flex min-h-[92vh] items-center overflow-hidden bg-fjord pt-20">
+  <Image
+    src={photos.hero}
+    alt={t(lang, 'home.heroAlt')}
+    widths={[800, 1280, 1920]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+    class="absolute inset-0 h-full w-full object-cover opacity-30"
+  />
+  <div class="absolute inset-0 bg-gradient-to-br from-fjord via-fjord/90 to-fjord-soft/80"></div>
+  <div class="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl py-24">
+      <Reveal>
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 backdrop-blur-sm">
+          <span class="h-2 w-2 animate-pulse rounded-full bg-brand-bright"></span>
+          <span class="text-xs font-semibold uppercase tracking-wider text-white/90">{t(lang, 'home.badge')}</span>
+        </span>
+      </Reveal>
+      <Reveal delay={1}>
+        <h1 class="mt-6 text-5xl font-extrabold leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
+          {t(lang, 'home.h1a')} <span class="text-brand-bright">{t(lang, 'home.h1b')}</span>
+        </h1>
+      </Reveal>
+      <Reveal delay={2}>
+        <p class="mt-7 max-w-2xl text-lg font-light leading-relaxed text-white/75 md:text-xl">{t(lang, 'home.intro')}</p>
+      </Reveal>
+      <Reveal delay={3}>
+        <div class="mt-10 flex flex-col gap-4 sm:flex-row">
+          <Button href={contact} variant="primary">
+            {t(lang, 'home.ctaPrimary')} <Icon name="arrow" class="h-5 w-5" />
+          </Button>
+          <Button href="#taenastur" variant="ghost-light">{t(lang, 'home.ctaSecondary')}</Button>
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>

@@ -49,6 +49,22 @@ test('english nav links point to english pages', async () => {
   assert.match(html, /href="\/en\/contact"/);
 });
 
+test('home hero and services render (FO)', async () => {
+  const html = await readDist('index.html');
+  assert.match(html, /Minni umsiting\. Meira ítrótt\./);
+  assert.match(html, /føroyskan ítrótt\./);
+  assert.match(html, /href="\/klaedir"/);
+  assert.match(html, /href="\/utgerd"/);
+  assert.match(html, /href="\/prenting"/);
+  assert.match(html, /href="\/club-shop"/);
+});
+
+test('home hero and services render (EN)', async () => {
+  const html = await readDist('en/index.html');
+  assert.match(html, /Faroese sport\./);
+  assert.match(html, /href="\/en\/apparel"/);
+});
+
 test('all photo assets exist and are non-trivial in size', async () => {
   const names = ['hero', 'apparel', 'equipment', 'printing', 'clubshop', 'about', 'philosophy'];
   for (const name of names) {

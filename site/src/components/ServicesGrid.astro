@@ -1,0 +1,21 @@
+---
+import Reveal from './Reveal.astro';
+import SectionHeading from './SectionHeading.astro';
+import ServiceCard from './ServiceCard.astro';
+import { services } from '../data/services.mjs';
+import { t } from '../i18n/utils.mjs';
+
+const { lang } = Astro.props;
+---
+<section id="taenastur" class="bg-white py-24 lg:py-32">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow={t(lang, 'services.eyebrow')} title={t(lang, 'services.title')} />
+    <div class="mt-16 grid gap-8 md:grid-cols-2">
+      {services.map((service, i) => (
+        <Reveal delay={i % 2} class="h-full">
+          <ServiceCard lang={lang} service={service} />
+        </Reveal>
+      ))}
+    </div>
+  </div>
+</section>
