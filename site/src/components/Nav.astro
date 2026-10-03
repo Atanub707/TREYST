@@ -9,6 +9,7 @@ const { lang } = Astro.props;
 const home = localizePath('/', lang);
 const about = localizePath('/um-okkum', lang);
 const contact = localizePath('/samband', lang);
+const tryon = localizePath('/roynd', lang);
 const items = services.map((s) => ({
   id: s.id,
   href: localizePath(s.slugs.fo, lang),
@@ -34,6 +35,11 @@ const link = 'text-sm font-medium text-white/80 transition-colors hover:text-whi
                 {item.label}
               </a>
             ))}
+            <div class="mx-2 my-1 h-px bg-white/10"></div>
+            <a href={tryon} class="flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-white">
+              <Icon name="sparkles" class="h-4 w-4 text-brand-bright" />
+              {t(lang, 'nav.tryon')}
+            </a>
           </div>
         </div>
       </div>
@@ -71,6 +77,10 @@ const link = 'text-sm font-medium text-white/80 transition-colors hover:text-whi
           {items.map((item) => (
             <a href={item.href} class="hover:text-brand-bright">{item.label}</a>
           ))}
+          <a href={tryon} class="flex items-center gap-2 hover:text-brand-bright">
+            <Icon name="sparkles" class="h-5 w-5 text-brand-bright" />
+            {t(lang, 'nav.tryon')}
+          </a>
         </div>
       </div>
       <a href={about} class="hover:text-brand-bright">{t(lang, 'nav.about')}</a>

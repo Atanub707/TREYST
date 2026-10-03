@@ -12,6 +12,7 @@ export function t(lang, key) {
 export const ROUTE_PAIRS = [
   { fo: '/', en: '/en/' },
   ...services.map((s) => ({ fo: s.slugs.fo, en: s.slugs.en })),
+  { fo: '/roynd', en: '/en/try-on' },
   { fo: '/um-okkum', en: '/en/about' },
   { fo: '/samband', en: '/en/contact' },
   { fo: '/treytir', en: '/en/terms' },

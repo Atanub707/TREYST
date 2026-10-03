@@ -215,3 +215,15 @@ test('sitemap, robots and JSON-LD are present', async () => {
   assert.match(html, /"@type":"LocalBusiness"/);
   assert.equal(await exists('og-image.png'), true, 'og-image.png should exist');
 });
+
+test('try-on is discoverable from nav and footer (FO)', async () => {
+  const html = await readDist('index.html');
+  assert.match(html, /href="\/roynd"/);
+  assert.match(html, /Royn búnan/);
+});
+
+test('try-on is discoverable from nav and footer (EN)', async () => {
+  const html = await readDist('en/index.html');
+  assert.match(html, /href="\/en\/try-on"/);
+  assert.match(html, /Try on/);
+});
