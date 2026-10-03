@@ -131,3 +131,16 @@ test('club shop page renders steps (EN)', async () => {
   assert.match(html, /A club shop for your club/);
   assert.match(html, /Catalogue/);
 });
+
+test('about page renders (FO)', async () => {
+  const html = await readDist('um-okkum/index.html');
+  assert.match(html, /Ikki bert ein veitari\./);
+  assert.match(html, /Ein viðleikari\./);
+  assert.match(html, /info@treyst\.fo/);
+});
+
+test('about page renders (EN)', async () => {
+  const html = await readDist('en/about/index.html');
+  assert.match(html, /Not just a supplier\./);
+  assert.match(html, /A teammate\./);
+});

@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import Reveal from './Reveal.astro';
+import ValuesSection from './ValuesSection.astro';
+import CtaBand from './CtaBand.astro';
+import { photos } from '../data/photos.mjs';
+import { t } from '../i18n/utils.mjs';
+
+const { lang } = Astro.props;
+const contactCards = [
+  { icon: 'mail', label: t(lang, 'contact.email'), value: t(lang, 'contact.emailValue'), href: 'mailto:info@treyst.fo' },
+  { icon: 'phone', label: t(lang, 'contact.phone'), value: t(lang, 'contact.phoneValue'), href: 'tel:+298504082' },
+  { icon: 'pin', label: t(lang, 'contact.location'), value: t(lang, 'contact.locationValue'), href: null },
+];
+---
+<section class="bg-fjord pt-20">
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+    <div class="grid items-center gap-16 lg:grid-cols-2">
+      <Reveal>
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wider text-brand-bright">{t(lang, 'about.eyebrow')}</p>
+          <h1 class="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl">
+            {t(lang, 'about.h1')}
+            <br />
+            <span class="text-brand-bright">{t(lang, 'about.h1accent')}</span>
+          </h1>
+          <p class="mt-8 text-lg font-light leading-relaxed text-white/75">{t(lang, 'about.p1')}</p>
+          <p class="mt-5 text-lg font-light leading-relaxed text-white/75">{t(lang, 'about.p2')}</p>
+        </div>
+      </Reveal>
+      <Reveal delay={1}>
+        <div class="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10">
+          <Image
+            src={photos.about}
+            alt={t(lang, 'about.alt')}
+            widths={[600, 960]}
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            loading="eager"
+            class="h-full w-full object-cover"
+          />
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>
+
+<ValuesSection lang={lang} />
+
+<section class="bg-white py-24">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <blockquote class="border-y-2 border-brand py-12 text-center">
+      <p class="font-display text-3xl font-bold leading-snug text-ink md:text-4xl">{t(lang, 'about.quote')}</p>
+    </blockquote>
+  </div>
+</section>
+
+<section class="bg-fog py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-6 md:grid-cols-3">
+      {contactCards.map((card) => (
+        <div class="flex items-center gap-4 rounded-2xl border border-ink/5 bg-white p-6">
+          <div class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+            <Icon name={card.icon} class="h-6 w-6" />
+          </div>
+          <div>
+            <div class="text-sm font-semibold uppercase tracking-wider text-ink/50">{card.label}</div>
+            {card.href
+              ? <a href={card.href} class="font-semibold text-ink transition-colors hover:text-brand">{card.value}</a>
+              : <div class="font-semibold text-ink">{card.value}</div>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<CtaBand lang={lang} />
