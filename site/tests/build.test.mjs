@@ -102,3 +102,17 @@ test('equipment page renders (EN)', async () => {
   assert.match(html, /Equipment for sports clubs/);
   assert.match(html, /href="\/en\/contact"/);
 });
+
+test('printing page includes the jersey customizer (FO)', async () => {
+  const html = await readDist('prenting/index.html');
+  assert.match(html, /data-customizer/);
+  assert.match(html, /data-jersey-body/);
+  assert.match(html, /data-name-input/);
+  assert.match(html, /name="jersey-color"/);
+});
+
+test('printing page includes the jersey customizer (EN)', async () => {
+  const html = await readDist('en/printing/index.html');
+  assert.match(html, /data-customizer/);
+  assert.match(html, /Try it yourself/);
+});

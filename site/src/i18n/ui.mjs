@@ -235,6 +235,11 @@ export const ui = {
   'customizer.name': { fo: 'Navn á baki', en: 'Name on back' },
   'customizer.number': { fo: 'Nummar', en: 'Number' },
   'customizer.jerseyAlt': { fo: 'Design av troyggju', en: 'Jersey design preview' },
+  'color.white': { fo: 'Hvítur', en: 'White' },
+  'color.dark': { fo: 'Svartur', en: 'Black' },
+  'color.teal': { fo: 'Grønur', en: 'Green' },
+  'color.mint': { fo: 'Mint', en: 'Mint' },
+  'color.light': { fo: 'Ljósur', en: 'Light' },
   'meta.printing.title': { fo: 'Prenting', en: 'Printing' },
   'meta.printing.description': { fo: 'Nøvn, nummur, logo og stuðlar — hágóðsku prent beint á klæðini.', en: 'Names, numbers, logos and sponsors — high-quality printing straight onto the kit.' },
 
