@@ -1,10 +1,11 @@
 ---
-const { lang, title, description, path, altPath, jsonLd } = Astro.props;
+const { lang, title, description, path, altPath, jsonLd, ogImage } = Astro.props;
 const site = Astro.site ?? new URL('https://treyst.fo');
 const canonical = new URL(path, site).href;
 const alt = new URL(altPath, site).href;
+const ogImageUrl = ogImage ? new URL(ogImage, site).href : new URL('/og-image.png', site).href;
 const locales = { fo: 'fo_FO', en: 'en_US' };
-const fullTitle = title === 'TREYST' ? title : `${title} | TREYST`;
+const fullTitle = title === 'TREYST' || title.endsWith('| TREYST') ? title : `${title} | TREYST`;
 ---
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
@@ -17,10 +18,10 @@ const fullTitle = title === 'TREYST' ? title : `${title} | TREYST`;
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
-<meta property="og:image" content={new URL('/og-image.png', site).href} />
+<meta property="og:image" content={ogImageUrl} />
 <meta property="og:locale" content={locales[lang]} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={new URL('/og-image.png', site).href} />
+<meta name="twitter:image" content={ogImageUrl} />
 {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />}

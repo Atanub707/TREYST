@@ -281,3 +281,22 @@ test('contact page renders the kit chip markup', async () => {
   assert.match(html, /name="kit"/);
   assert.match(html, /data-kit-names/);
 });
+
+test('jersey detail pages build with product data (FO + EN)', async () => {
+  for (const slug of ['jersey-01', 'jersey-06', 'jersey-12']) {
+    const fo = await readDist(`roynd/${slug}/index.html`);
+    const en = await readDist(`en/try-on/${slug}/index.html`);
+    assert.match(fo, /<html lang="fo"/);
+    assert.match(en, /<html lang="en"/);
+    assert.match(fo, /"@type":"Product"/);
+    assert.match(fo, /anywear\.decart\.ai\/widget\/latest\/anywear\.js\?domain=treyst\.vercel\.app/);
+    assert.match(fo, /data-tryon-open/);
+    assert.match(fo, new RegExp(`hreflang="en" href="https://treyst\\.fo/en/try-on/${slug}"`));
+    assert.match(en, new RegExp(`hreflang="fo" href="https://treyst\\.fo/roynd/${slug}"`));
+  }
+});
+
+test('widget script stays off non-detail pages', async () => {
+  const home = await readDist('index.html');
+  assert.doesNotMatch(home, /anywear\.decart\.ai/);
+});

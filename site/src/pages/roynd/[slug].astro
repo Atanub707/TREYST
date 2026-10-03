@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JerseyDetailPage from '../../components/JerseyDetailPage.astro';
+import { jerseys } from '../../data/jerseys.mjs';
+import { t } from '../../i18n/utils.mjs';
+
+export function getStaticPaths() {
+  return jerseys.map((jersey) => ({ params: { slug: jersey.slug } }));
+}
+
+const lang = 'fo';
+const { slug } = Astro.params;
+const jersey = jerseys.find((item) => item.slug === slug);
+const name = t(lang, jersey.nameKey);
+const ogImage = new URL(jersey.image.src, Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name,
+  image: [ogImage],
+  brand: { '@type': 'Brand', name: 'TREYST' },
+  category: 'Sports jersey',
+};
+---
+<BaseLayout
+  lang={lang}
+  title={`${name} | TREYST`}
+  description={t(lang, 'meta.tryon.description')}
+  path={`/roynd/${slug}`}
+  altPath={`/en/try-on/${slug}`}
+  jsonLd={jsonLd}
+  ogImage={ogImage}
+>
+  <JerseyDetailPage lang={lang} slug={slug} />
+</BaseLayout>

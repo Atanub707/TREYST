@@ -23,6 +23,14 @@ const strip = (path) => (path.length > 1 && path.endsWith('/') ? path.slice(0, -
 
 export function switchLocalePath(pathname, targetLang) {
   const current = strip(pathname || '/');
+  const FO_DETAIL = '/roynd/';
+  const EN_DETAIL = '/en/try-on/';
+  if (current.startsWith(FO_DETAIL) || current.startsWith(EN_DETAIL)) {
+    if (targetLang === 'en') {
+      return current.startsWith(EN_DETAIL) ? current : `${EN_DETAIL}${current.slice(FO_DETAIL.length)}`;
+    }
+    return current.startsWith(FO_DETAIL) ? current : `${FO_DETAIL}${current.slice(EN_DETAIL.length)}`;
+  }
   const pair = ROUTE_PAIRS.find((p) => strip(p.fo) === current || strip(p.en) === current);
   if (!pair) return targetLang === 'en' ? '/en/' : '/';
   return targetLang === 'en' ? pair.en : pair.fo;

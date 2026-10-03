@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import JerseyCard from './JerseyCard.astro';
+import { jerseys } from '../data/jerseys.mjs';
+import { t, localizePath } from '../i18n/utils.mjs';
+
+const { lang, slug } = Astro.props;
+const jersey = jerseys.find((item) => item.slug === slug);
+const name = t(lang, jersey.nameKey);
+const collectionPath = localizePath('/roynd', lang);
+const contactPath = localizePath('/samband', lang);
+const related = jerseys.filter((item) => item.slug !== slug).slice(0, 4);
+---
+<article class="bg-white pb-20 pt-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <a href={collectionPath} class="text-sm font-semibold text-brand transition-colors hover:text-brand/80">{t(lang, 'tryon.back')}</a>
+    <div class="mt-8 grid gap-12 lg:grid-cols-2">
+      <div class="overflow-hidden rounded-3xl border border-ink/5 bg-fog">
+        <Image
+          src={jersey.image}
+          alt={name}
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+          class="h-full w-full object-cover"
+        />
+      </div>
+      <div class="flex flex-col justify-center">
+        <h1 class="text-4xl font-extrabold tracking-tight text-ink md:text-5xl">{name}</h1>
+        <p class="mt-6 text-lg leading-relaxed text-ink/70">{t(lang, 'tryon.detailIntro')}</p>
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <button
+            type="button"
+            data-tryon-open
+            data-loading={t(lang, 'tryon.loading')}
+            data-failed={t(lang, 'tryon.failed')}
+            class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-brand/90"
+          >
+            <Icon name="sparkles" class="h-5 w-5" />
+            {t(lang, 'tryon.tryButton')}
+          </button>
+          <Button href={`${contactPath}?kit=${jersey.slug}`} variant="ghost-dark">
+            {t(lang, 'tryon.inquiry')} <Icon name="arrow" class="h-5 w-5" />
+          </Button>
+        </div>
+        <p data-tryon-status aria-live="polite" class="mt-4 hidden text-sm font-medium text-ink/60"></p>
+        <p class="mt-4 text-sm text-ink/60">{t(lang, 'tryon.detailNote')}</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script is:inline src="https://anywear.decart.ai/widget/latest/anywear.js?domain=treyst.vercel.app" async></script>
+<script is:inline>
+  (function () {
+    var button = document.querySelector('[data-tryon-open]');
+    var status = document.querySelector('[data-tryon-status]');
+    if (!button) return;
+    function openWidget() {
+      if (window.DecartWidget && typeof window.DecartWidget.open === 'function') {
+        window.DecartWidget.open();
+        return true;
+      }
+      return false;
+    }
+    button.addEventListener('click', function () {
+      if (openWidget()) return;
+      if (status) {
+        status.textContent = button.getAttribute('data-loading') || '';
+        status.classList.remove('hidden');
+      }
+      var tries = 0;
+      var timer = setInterval(function () {
+        tries += 1;
+        if (openWidget()) {
+          clearInterval(timer);
+          if (status) status.classList.add('hidden');
+          return;
+        }
+        if (tries > 10) {
+          clearInterval(timer);
+          if (status) status.textContent = button.getAttribute('data-failed') || '';
+        }
+      }, 300);
+    });
+  })();
+</script>
+
+<section class="bg-fog py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold tracking-tight text-ink md:text-3xl">{t(lang, 'tryon.related')}</h2>
+    <div class="mt-8 grid grid-cols-2 gap-6 lg:grid-cols-4">
+      {related.map((item) => (
+        <JerseyCard lang={lang} jersey={item} contactPath={contactPath} />
+      ))}
+    </div>
+  </div>
+</section>

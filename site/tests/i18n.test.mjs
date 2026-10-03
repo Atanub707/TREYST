@@ -37,6 +37,12 @@ test('services data is well-formed', () => {
   assert.equal(otherServices('printing').length, 3);
 });
 
+test('switchLocalePath maps jersey detail routes by prefix', () => {
+  assert.equal(switchLocalePath('/roynd/jersey-03', 'en'), '/en/try-on/jersey-03');
+  assert.equal(switchLocalePath('/en/try-on/jersey-11', 'fo'), '/roynd/jersey-11');
+  assert.equal(switchLocalePath('/roynd/jersey-03', 'fo'), '/roynd/jersey-03');
+});
+
 test('every dictionary key has non-empty fo and en values', () => {
   for (const [key, entry] of Object.entries(ui)) {
     assert.ok(entry && typeof entry === 'object', `${key} missing entry`);
