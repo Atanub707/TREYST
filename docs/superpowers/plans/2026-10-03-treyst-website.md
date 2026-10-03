@@ -2322,7 +2322,7 @@ const colors = [
                   checked={i === 0}
                 />
                 <span
-                  class="block h-11 w-11 rounded-full border-2 border-ink/10 transition peer-checked:border-brand peer-checked:ring-2 peer-checked:ring-brand/30"
+                  class="block h-11 w-11 rounded-full border-2 border-ink/10 transition peer-checked:border-brand peer-checked:ring-2 peer-checked:ring-brand/30 peer-focus-visible:ring-2 peer-focus-visible:ring-ink peer-focus-visible:ring-offset-2"
                   style={`background:${color.hex}`}
                 />
                 <span class="sr-only">{t(lang, color.key)}</span>
