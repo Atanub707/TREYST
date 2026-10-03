@@ -43,15 +43,15 @@ Static build — deploy `site/dist/` anywhere:
 
 `astro.config.mjs` sets `site: 'https://treyst.fo'` — update it if the domain changes so sitemap/canonical URLs stay correct.
 
-## Try-on page (Phase A)
+## Try-on page
 
 `/roynd` (EN: `/en/try-on`) shows the jersey collection. Each card links to the quote form with
 `?kit=<slug>`, which prefills "Interested in: <name>".
 
 - Swap jerseys: replace files in `site/src/assets/jerseys/` (same names), update `site/src/data/jerseys.mjs`
   and the names in `site/src/i18n/ui.mjs` (`jersey.n1`…), and refresh `site/src/assets/jerseys/CREDITS.md`.
-- Phase B: the live try-on (Anywear widget) is wired when the client's Anywear account/script exists —
-  the jersey data is already shaped for it (slug + image).
+- The Anywear try-on widget is wired on the jersey detail pages (requires the domain to match the script's
+  `?domain=` parameter — see the domain-swap note above).
 - Jersey detail pages (`/roynd/jersey-01` … `/en/try-on/jersey-01`) carry Product JSON-LD and per-page og:image,
   which activates the Anywear try-on widget on those pages only. The "Royn á tær" button opens it via
   `window.DecartWidget.open()`.
