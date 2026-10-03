@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import { t, localizePath } from '../i18n/utils.mjs';
+
+const { lang, eyebrow, title, lede, image } = Astro.props;
+const home = localizePath('/', lang);
+---
+<section class="relative overflow-hidden bg-fjord pt-20">
+  {image && (
+    <Image
+      src={image}
+      alt=""
+      widths={[800, 1280, 1920]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="absolute inset-0 h-full w-full object-cover opacity-25"
+    />
+  )}
+  <div class="absolute inset-0 bg-gradient-to-b from-fjord/95 via-fjord/85 to-fjord"></div>
+  <div class="relative mx-auto max-w-7xl px-4 pb-20 pt-14 sm:px-6 lg:px-8 lg:pb-24">
+    <nav aria-label="Breadcrumb">
+      <ol class="flex items-center gap-2 text-sm text-white/60">
+        <li><a href={home} class="transition-colors hover:text-white">{t(lang, 'nav.home')}</a></li>
+        <li aria-hidden="true">/</li>
+        <li class="text-white/90">{title}</li>
+      </ol>
+    </nav>
+    <p class="mt-8 text-sm font-semibold uppercase tracking-wider text-brand-bright">{eyebrow}</p>
+    <h1 class="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{title}</h1>
+    {lede && <p class="mt-6 max-w-2xl text-lg font-light leading-relaxed text-white/75">{lede}</p>}
+  </div>
+</section>

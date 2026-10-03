@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServicePage from '../components/ServicePage.astro';
+import { t } from '../i18n/utils.mjs';
+
+const lang = 'fo';
+const id = 'equipment';
+---
+<BaseLayout
+  lang={lang}
+  title={t(lang, `meta.${id}.title`)}
+  description={t(lang, `meta.${id}.description`)}
+  path="/utgerd"
+  altPath="/en/equipment"
+>
+  <ServicePage lang={lang} id={id} />
+</BaseLayout>

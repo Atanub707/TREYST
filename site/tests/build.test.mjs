@@ -88,3 +88,17 @@ test('home values, philosophy, process and cta render (EN)', async () => {
   assert.match(html, /How we work/);
   assert.match(html, /Make everyday easier/);
 });
+
+test('apparel page renders (FO)', async () => {
+  const html = await readDist('klaedir/index.html');
+  assert.match(html, /Klæðir til ítróttafeløg/);
+  assert.match(html, /Liðbúni/);
+  assert.match(html, /<details/);
+  assert.match(html, /href="\/samband"/);
+});
+
+test('equipment page renders (EN)', async () => {
+  const html = await readDist('en/equipment/index.html');
+  assert.match(html, /Equipment for sports clubs/);
+  assert.match(html, /href="\/en\/contact"/);
+});

@@ -1,0 +1,16 @@
+---
+import Icon from './Icon.astro';
+
+const { items } = Astro.props;
+---
+<div class="divide-y divide-ink/10 border-y border-ink/10">
+  {items.map((item) => (
+    <details class="group">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-lg font-semibold text-ink [&::-webkit-details-marker]:hidden">
+        {item.q}
+        <Icon name="chevron" class="h-5 w-5 shrink-0 text-brand transition-transform duration-300 group-open:rotate-180" />
+      </summary>
+      <p class="pb-6 pr-10 leading-relaxed text-ink/70">{item.a}</p>
+    </details>
+  ))}
+</div>
