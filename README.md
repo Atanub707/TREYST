@@ -51,7 +51,7 @@ Static build — deploy `site/dist/` anywhere:
 - Swap jerseys: replace files in `site/src/assets/jerseys/` (same names), update `site/src/data/jerseys.mjs`
   and the names in `site/src/i18n/ui.mjs` (`jersey.n1`…), and refresh `site/src/assets/jerseys/CREDITS.md`.
 - The Anywear try-on widget is wired on the jersey detail pages (requires the domain to match the script's
-  `?domain=` parameter — see the domain-swap note above).
+  `?domain=` parameter — see the domain-swap note below).
 - Jersey detail pages (`/roynd/jersey-01` … `/en/try-on/jersey-01`) carry Product JSON-LD and per-page og:image,
   which activates the Anywear try-on widget on those pages only. The "Royn á tær" button opens it via
   `window.DecartWidget.open()`.

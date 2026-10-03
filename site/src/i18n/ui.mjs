@@ -319,7 +319,6 @@ export const ui = {
     fo: 'Klassiskur ítróttarbúni í sterkum litum. Klæðir, prenting og levering verða løgd til rættis saman við tykkum.',
     en: 'A classic sports jersey in strong colours. Apparel, printing and delivery are arranged together with you.',
   },
-  'meta.detail.title': { fo: 'Búni', en: 'Jersey' },
   'quote.kitInterested': { fo: 'Áhugi á', en: 'Interested in' },
   'jersey.n1': { fo: 'Búni 1', en: 'Jersey 1' },
   'jersey.n2': { fo: 'Búni 2', en: 'Jersey 2' },

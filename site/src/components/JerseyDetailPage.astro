@@ -59,6 +59,14 @@ const related = jerseys.filter((item) => item.slug !== slug).slice(0, 4);
     var button = document.querySelector('[data-tryon-open]');
     var status = document.querySelector('[data-tryon-status]');
     if (!button) return;
+    var timer = null;
+
+    function setStatus(message) {
+      if (!status) return;
+      status.textContent = message || '';
+      status.classList.toggle('hidden', !message);
+    }
+
     function openWidget() {
       if (window.DecartWidget && typeof window.DecartWidget.open === 'function') {
         window.DecartWidget.open();
@@ -66,23 +74,26 @@ const related = jerseys.filter((item) => item.slug !== slug).slice(0, 4);
       }
       return false;
     }
+
     button.addEventListener('click', function () {
-      if (openWidget()) return;
-      if (status) {
-        status.textContent = button.getAttribute('data-loading') || '';
-        status.classList.remove('hidden');
+      if (openWidget()) {
+        setStatus('');
+        return;
       }
+      if (timer) return;
       var tries = 0;
-      var timer = setInterval(function () {
+      timer = setInterval(function () {
         tries += 1;
         if (openWidget()) {
           clearInterval(timer);
-          if (status) status.classList.add('hidden');
+          timer = null;
+          setStatus('');
           return;
         }
         if (tries > 10) {
           clearInterval(timer);
-          if (status) status.textContent = button.getAttribute('data-failed') || '';
+          timer = null;
+          setStatus(button.getAttribute('data-failed'));
         }
       }, 300);
     });
