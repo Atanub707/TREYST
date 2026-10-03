@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import SportStrip from '../components/SportStrip.astro';
-import ServicesGrid from '../components/ServicesGrid.astro';
+import HomePage from '../components/HomePage.astro';
 import { t } from '../i18n/utils.mjs';
 
 const lang = 'fo';
@@ -14,7 +12,5 @@ const lang = 'fo';
   path="/"
   altPath="/en/"
 >
-  <Hero lang={lang} />
-  <SportStrip lang={lang} />
-  <ServicesGrid lang={lang} />
+  <HomePage lang={lang} />
 </BaseLayout>

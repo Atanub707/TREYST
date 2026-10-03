@@ -72,3 +72,19 @@ test('all photo assets exist and are non-trivial in size', async () => {
     await access(url); // throws if missing
   }
 });
+
+test('home values, philosophy, process and cta render (FO)', async () => {
+  const html = await readDist('index.html');
+  assert.match(html, /Alt á einum stað\./);
+  assert.match(html, /TREYST er ein viðleikari\./);
+  assert.match(html, /Hvussu vit arbeiða/);
+  assert.match(html, /Ger gerandisdagin lættari/);
+});
+
+test('home values, philosophy, process and cta render (EN)', async () => {
+  const html = await readDist('en/index.html');
+  assert.match(html, /All in one place\./);
+  assert.match(html, /TREYST is a teammate\./);
+  assert.match(html, /How we work/);
+  assert.match(html, /Make everyday easier/);
+});
