@@ -1569,7 +1569,7 @@ const items = t(lang, 'sports.items');
 ---
 <section class="border-b border-ink/5 bg-fog py-10">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <p class="text-center text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">{t(lang, 'sports.label')}</p>
+    <p class="text-center text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">{t(lang, 'sports.label')}</p>
     <ul class="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
       {items.map((item) => (
         <li class="font-display text-lg font-bold uppercase tracking-wide text-ink/70">{item}</li>
@@ -1850,7 +1850,7 @@ const steps = [1, 2, 3, 4].map((n) => ({
       {steps.map((step, i) => (
         <li class="border-t border-ink/10 pt-6">
           <Reveal delay={i % 4}>
-            <span class="font-display text-5xl font-extrabold text-brand/25">0{i + 1}</span>
+            <span class="font-display text-5xl font-extrabold text-brand/80">0{i + 1}</span>
             <h3 class="mt-4 text-xl font-bold text-ink">{step.title}</h3>
             <p class="mt-2 leading-relaxed text-ink/70">{step.desc}</p>
           </Reveal>
@@ -1875,7 +1875,7 @@ const contact = localizePath('/samband', lang);
 <section class="bg-brand py-20">
   <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
     <h2 class="text-4xl font-bold tracking-tight text-white md:text-5xl">{t(lang, 'cta.title')}</h2>
-    <p class="mt-4 text-lg text-white/80">{t(lang, 'cta.desc')}</p>
+    <p class="mt-4 text-lg text-white">{t(lang, 'cta.desc')}</p>
     <div class="mt-8 flex justify-center">
       <Button href={contact} variant="on-brand">
         {t(lang, 'cta.button')} <Icon name="arrow" class="h-5 w-5" />
@@ -2506,7 +2506,7 @@ Replace the icon block inside the card with:
 
 ```astro
 {numbered ? (
-  <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center font-display text-xl font-extrabold text-brand/40">0{i + 1}</span>
+              <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center font-display text-xl font-extrabold text-brand/80">0{i + 1}</span>
 ) : (
   <div class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
     <Icon name="check" class="h-6 w-6" />
@@ -2686,7 +2686,7 @@ const contactCards = [
             <Icon name={card.icon} class="h-6 w-6" />
           </div>
           <div>
-            <div class="text-sm font-semibold uppercase tracking-wider text-ink/50">{card.label}</div>
+            <div class="text-sm font-semibold uppercase tracking-wider text-ink/70">{card.label}</div>
             {card.href
               ? <a href={card.href} class="font-semibold text-ink transition-colors hover:text-brand">{card.value}</a>
               : <div class="font-semibold text-ink">{card.value}</div>}
@@ -2981,7 +2981,7 @@ const cards = [
               <Icon name={card.icon} class="h-6 w-6" />
             </div>
             <div>
-              <div class="text-sm font-semibold uppercase tracking-wider text-ink/50">{card.label}</div>
+              <div class="text-sm font-semibold uppercase tracking-wider text-ink/70">{card.label}</div>
               {card.href
                 ? <a href={card.href} class="font-semibold text-ink transition-colors hover:text-brand">{card.value}</a>
                 : <div class="font-semibold text-ink">{card.value}</div>}
