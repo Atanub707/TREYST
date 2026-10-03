@@ -891,6 +891,7 @@ export const ui = {
   'form.error': { fo: 'Onkur feilur hendi. Royn aftur seinni ella send teldupost til info@treyst.fo.', en: 'Something went wrong. Try again later or email info@treyst.fo.' },
   'form.required': { fo: 'Vinarliga fyll út allar skyldugu teigir.', en: 'Please fill in all required fields.' },
   'form.invalidEmail': { fo: 'Vinarliga skriva eina gilda teldupostadressu.', en: 'Please enter a valid email address.' },
+  'form.mailSubject': { fo: 'Fyrispurningur frá', en: 'Enquiry from' },
 
   // ---- legal ----
   'meta.terms.title': { fo: 'Treytir', en: 'Terms' },
@@ -1228,7 +1229,7 @@ const link = 'text-sm text-white/70 transition-colors hover:text-white';
       </div>
     </div>
     <div class="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center">
-      <p>© {year} TREYST · Hoyvík, Føroyar. {t(lang, 'footer.rights')}</p>
+      <p>© {year} TREYST · {t(lang, 'contact.locationValue')}. {t(lang, 'footer.rights')}</p>
       <ul class="flex flex-wrap gap-4">
         {legal.map((item) => <li><a href={item.href} class="transition-colors hover:text-white">{item.label}</a></li>)}
       </ul>
@@ -1343,7 +1344,8 @@ Run this loop; it checks file type, converts to JPEG via `sips` if needed, and f
 ```bash
 for f in hero apparel equipment printing clubshop about philosophy; do
   file "src/assets/photos/$f.jpg" | grep -qE 'JPEG|PNG' || { echo "BAD FILE: $f"; exit 1; }
-  sips -s format jpeg "src/assets/photos/$f.jpg" --out "src/assets/photos/$f.jpg" >/dev/null
+  sips -s format jpeg "src/assets/photos/$f.jpg" --out "/tmp/treyst-$f.jpg" >/dev/null
+  mv "/tmp/treyst-$f.jpg" "src/assets/photos/$f.jpg"
   w=$(sips -g pixelWidth "src/assets/photos/$f.jpg" | awk '/pixelWidth/ {print $2}')
   echo "$f: ${w}px"
   [ "$w" -ge 1600 ] || { echo "TOO SMALL: $f"; exit 1; }
@@ -2804,6 +2806,7 @@ const label = 'block text-sm font-semibold text-ink/70';
   data-msg-success={t(lang, 'form.success')}
   data-msg-error={t(lang, 'form.error')}
   data-msg-submitting={t(lang, 'form.submitting')}
+  data-msg-subject={t(lang, 'form.mailSubject')}
   novalidate
   class="rounded-3xl border border-ink/5 bg-fog p-8"
 >
@@ -2895,7 +2898,7 @@ const label = 'block text-sm font-semibold text-ink/70';
       const endpoint = form.getAttribute('data-endpoint');
 
       if (!endpoint) {
-        const subject = encodeURIComponent(`Fyrispurningur frá ${name}`);
+        const subject = encodeURIComponent(`${msg('subject')} ${name}`);
         const body = encodeURIComponent(
           `Navn: ${name}\nFelag: ${payload.club}\nTeldupostur: ${email}\nTelefon: ${payload.phone}\nTørvur: ${payload.topic}\n\n${message}`
         );
