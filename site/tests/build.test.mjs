@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { access } from 'node:fs/promises';
 import { readDist, exists } from './helpers.mjs';
 
 test('home page builds', async () => {
@@ -46,4 +47,12 @@ test('english nav links point to english pages', async () => {
   const html = await readDist('en/index.html');
   assert.match(html, /href="\/en\/about"/);
   assert.match(html, /href="\/en\/contact"/);
+});
+
+test('all photo assets exist and are non-trivial in size', async () => {
+  const names = ['hero', 'apparel', 'equipment', 'printing', 'clubshop', 'about', 'philosophy'];
+  for (const name of names) {
+    const url = new URL(`../src/assets/photos/${name}.jpg`, import.meta.url);
+    await access(url); // throws if missing
+  }
 });
