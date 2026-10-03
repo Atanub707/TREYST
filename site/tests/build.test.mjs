@@ -309,3 +309,10 @@ test('gallery cards link to jersey detail pages (FO + EN)', async () => {
   assert.match(en, /href="\/en\/try-on\/jersey-01"/);
   assert.match(en, /Try it on/);
 });
+
+test('privacy pages mention the try-on partner', async () => {
+  const fo = await readDist('privatlivspolitikkur/index.html');
+  const en = await readDist('en/privacy/index.html');
+  assert.match(fo, /Anywear/);
+  assert.match(en, /Anywear/);
+});

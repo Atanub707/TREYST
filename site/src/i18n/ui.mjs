@@ -402,6 +402,10 @@ export const ui = {
     fo: 'Vit selja ella deila ikki tínar upplýsingar við triðjapart. Fyri spurningar, skriva til info@treyst.fo.',
     en: 'We do not sell or share your information with third parties. For questions, write to info@treyst.fo.',
   },
+  'legal.privacy.p3': {
+    fo: 'Try-on: tá ið tú brúkar try-on-loysnina, verður kameramyndin viðgjørd av try-on-partnara okkara (Anywear/Decart) fyri at vísa búnan á tær. Vit goyma ikki myndina hjá okkum.',
+    en: 'Try-on: when you use the try-on feature, the camera image is processed by our try-on partner (Anywear/Decart) to show the jersey on you. We do not store the image ourselves.',
+  },
 
   // ---- 404 ----
   'notfound.title': { fo: 'Síðan varð ikki funnin.', en: 'Page not found.' },

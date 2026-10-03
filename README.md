@@ -52,6 +52,11 @@ Static build — deploy `site/dist/` anywhere:
   and the names in `site/src/i18n/ui.mjs` (`jersey.n1`…), and refresh `site/src/assets/jerseys/CREDITS.md`.
 - Phase B: the live try-on (Anywear widget) is wired when the client's Anywear account/script exists —
   the jersey data is already shaped for it (slug + image).
+- Jersey detail pages (`/roynd/jersey-01` … `/en/try-on/jersey-01`) carry Product JSON-LD and per-page og:image,
+  which activates the Anywear try-on widget on those pages only. The "Royn á tær" button opens it via
+  `window.DecartWidget.open()`.
+- The widget script URL is domain-bound: it currently reads `?domain=treyst.vercel.app`. When treyst.fo goes live,
+  update the URL in `site/src/components/JerseyDetailPage.astro` AND the domain in the Anywear dashboard.
 
 ## Swapping assets
 
