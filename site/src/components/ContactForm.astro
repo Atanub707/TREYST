@@ -40,7 +40,7 @@ const label = 'block text-sm font-semibold text-ink/70';
   <script
     type="application/json"
     data-kit-names
-    set:html={JSON.stringify(Object.fromEntries(jerseys.map((jersey) => [jersey.slug, t(lang, jersey.nameKey)])))}
+    set:html={JSON.stringify(Object.fromEntries(jerseys.map((jersey) => [jersey.slug, t(lang, jersey.nameKey)]))).replace(/</g, '\\u003c')}
   />
   <div class="grid gap-6 sm:grid-cols-2">
     <div>
@@ -109,7 +109,7 @@ const label = 'block text-sm font-semibold text-ink/70';
       }
     })();
     const kitSlug = new URLSearchParams(window.location.search).get('kit') || '';
-    const kitName = kitNames[kitSlug] || '';
+    const kitName = typeof kitNames[kitSlug] === 'string' ? kitNames[kitSlug] : '';
     if (kitName) {
       if (kitInput) kitInput.value = kitSlug;
       if (kitLabel) kitLabel.textContent = `${form.getAttribute('data-msg-interested') || ''}: ${kitName}`;
