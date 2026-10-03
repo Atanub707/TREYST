@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HomePage from '../../components/HomePage.astro';
 import { t } from '../../i18n/utils.mjs';
+import { services } from '../../data/services.mjs';
 
 const lang = 'en';
 const jsonLd = {
@@ -14,9 +15,9 @@ const jsonLd = {
   telephone: '+298504082',
   address: { '@type': 'PostalAddress', addressLocality: 'Hoyvík', addressCountry: 'FO' },
   areaServed: { '@type': 'Country', name: 'Faroe Islands' },
-  makesOffer: ['Klæðir', 'Útgerð', 'Prenting', 'Club Shop'].map((name) => ({
+  makesOffer: services.map((s) => ({
     '@type': 'Offer',
-    itemOffered: { '@type': 'Service', name },
+    itemOffered: { '@type': 'Service', name: t(lang, `${s.key}.title`) },
   })),
 };
 ---

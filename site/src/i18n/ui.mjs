@@ -7,11 +7,14 @@ export const ui = {
   'nav.about': { fo: 'Um okkum', en: 'About' },
   'nav.contact': { fo: 'Samband', en: 'Contact' },
   'nav.cta': { fo: 'Set teg í samband', en: 'Get in touch' },
+  'nav.mainLabel': { fo: 'Høvuðsvalmynd', en: 'Main menu' },
+  'nav.menuLabel': { fo: 'Valmynd', en: 'Menu' },
   'nav.menu.open': { fo: 'Lat valmynd upp', en: 'Open menu' },
   'nav.menu.close': { fo: 'Lat valmynd aftur', en: 'Close menu' },
   'lang.switch': { fo: 'EN', en: 'FØ' },
   'lang.switchLabel': { fo: 'Broyta til enskt', en: 'Switch to Faroese' },
   'skip': { fo: 'Hoppa til innihalds', en: 'Skip to content' },
+  'a11y.breadcrumb': { fo: 'Leiðvísing', en: 'Breadcrumb' },
   'contact.emailValue': { fo: 'info@treyst.fo', en: 'info@treyst.fo' },
   'contact.phoneValue': { fo: '+298 504082', en: '+298 504082' },
   'footer.services': { fo: 'Tænastur', en: 'Services' },
@@ -318,6 +321,7 @@ export const ui = {
   'form.required': { fo: 'Vinarliga fyll út allar skyldugu teigir.', en: 'Please fill in all required fields.' },
   'form.invalidEmail': { fo: 'Vinarliga skriva eina gilda teldupostadressu.', en: 'Please enter a valid email address.' },
   'form.mailSubject': { fo: 'Fyrispurningur frá', en: 'Enquiry from' },
+  'form.mailtoNote': { fo: 'Teldupostforritið opnar seg — send boðið fyri at náa okkum.', en: 'Your email app should open — send the message to reach us.' },
 
   // ---- legal ----
   'meta.terms.title': { fo: 'Treytir', en: 'Terms' },

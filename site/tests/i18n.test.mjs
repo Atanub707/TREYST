@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { t, switchLocalePath, localizePath } from '../src/i18n/utils.mjs';
 import { services, otherServices, serviceById } from '../src/data/services.mjs';
+import { ui } from '../src/i18n/ui.mjs';
 
 test('t returns localized string', () => {
   assert.equal(t('fo', 'nav.home'), 'Heim');
@@ -34,4 +35,15 @@ test('services data is well-formed', () => {
   assert.deepEqual(services.map((s) => s.id), ['apparel', 'equipment', 'printing', 'clubshop']);
   assert.equal(serviceById('printing').slugs.fo, '/prenting');
   assert.equal(otherServices('printing').length, 3);
+});
+
+test('every dictionary key has non-empty fo and en values', () => {
+  for (const [key, entry] of Object.entries(ui)) {
+    assert.ok(entry && typeof entry === 'object', `${key} missing entry`);
+    for (const lang of ['fo', 'en']) {
+      const value = entry[lang];
+      const ok = (typeof value === 'string' && value.trim().length > 0) || (Array.isArray(value) && value.length > 0);
+      assert.ok(ok, `${key} missing ${lang}`);
+    }
+  }
 });

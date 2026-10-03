@@ -20,13 +20,13 @@ const link = 'text-sm font-medium text-white/80 transition-colors hover:text-whi
   <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
     <a href={home} class="font-display text-2xl font-extrabold tracking-[0.08em] text-white" aria-label="TREYST">TREYST</a>
 
-    <nav class="hidden items-center gap-8 md:flex" aria-label={t(lang, 'nav.services')}>
+    <nav class="hidden items-center gap-8 md:flex" aria-label={t(lang, 'nav.mainLabel')}>
       <a href={home} class={link}>{t(lang, 'nav.home')}</a>
       <div class="group relative">
-        <button type="button" class={`${link} inline-flex items-center gap-1`} aria-haspopup="true">
+        <a href={`${home}#taenastur`} class={`${link} inline-flex items-center gap-1`}>
           {t(lang, 'nav.services')}
           <Icon name="chevron" class="h-4 w-4" />
-        </button>
+        </a>
         <div class="invisible absolute left-1/2 top-full w-60 -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
           <div class="rounded-2xl border border-white/10 bg-fjord-soft p-2 shadow-2xl">
             {items.map((item) => (
@@ -55,7 +55,7 @@ const link = 'text-sm font-medium text-white/80 transition-colors hover:text-whi
   </div>
 </header>
 
-<dialog data-menu class="h-dvh w-full max-w-none bg-fjord p-0 text-white backdrop:bg-fjord">
+<dialog data-menu aria-label={t(lang, 'nav.menuLabel')} class="h-dvh w-full max-w-none bg-fjord p-0 text-white backdrop:bg-fjord">
   <div class="flex h-dvh flex-col overflow-y-auto px-6 py-6">
     <div class="flex items-center justify-between">
       <span class="font-display text-2xl font-extrabold tracking-[0.08em]">TREYST</span>
@@ -63,7 +63,7 @@ const link = 'text-sm font-medium text-white/80 transition-colors hover:text-whi
         <Icon name="close" class="h-7 w-7" />
       </button>
     </div>
-    <nav class="mt-10 flex flex-col gap-6 text-2xl font-display font-bold" aria-label={t(lang, 'nav.services')}>
+    <nav class="mt-10 flex flex-col gap-6 text-2xl font-display font-bold" aria-label={t(lang, 'nav.mainLabel')}>
       <a href={home} class="hover:text-brand-bright">{t(lang, 'nav.home')}</a>
       <div>
         <div class="text-base font-semibold uppercase tracking-wider text-white/50">{t(lang, 'nav.services')}</div>

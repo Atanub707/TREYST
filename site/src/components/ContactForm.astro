@@ -21,6 +21,7 @@ const label = 'block text-sm font-semibold text-ink/70';
   data-msg-success={t(lang, 'form.success')}
   data-msg-error={t(lang, 'form.error')}
   data-msg-submitting={t(lang, 'form.submitting')}
+  data-msg-mailto={t(lang, 'form.mailtoNote')}
   data-msg-subject={t(lang, 'form.mailSubject')}
   data-label-name={t(lang, 'form.name')}
   data-label-club={t(lang, 'form.club')}
@@ -124,7 +125,7 @@ const label = 'block text-sm font-semibold text-ink/70';
           `${label('name')}: ${name}\n${label('club')}: ${payload.club}\n${label('email')}: ${email}\n${label('phone')}: ${payload.phone}\n${label('topic')}: ${payload.topic}\n\n${message}`
         );
         window.location.href = `mailto:info@treyst.fo?subject=${subject}&body=${body}`;
-        status.textContent = msg('success');
+        status.textContent = msg('mailto');
         status.className = 'text-sm font-medium text-brand';
         return;
       }
