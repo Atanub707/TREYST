@@ -1,0 +1,45 @@
+---
+import ContactForm from './ContactForm.astro';
+import Icon from './Icon.astro';
+import { t } from '../i18n/utils.mjs';
+
+const { lang } = Astro.props;
+const cards = [
+  { icon: 'mail', label: t(lang, 'contact.email'), value: t(lang, 'contact.emailValue'), href: 'mailto:info@treyst.fo' },
+  { icon: 'phone', label: t(lang, 'contact.phone'), value: t(lang, 'contact.phoneValue'), href: 'tel:+298504082' },
+  { icon: 'pin', label: t(lang, 'contact.location'), value: t(lang, 'contact.locationValue'), href: null },
+];
+---
+<section class="bg-fjord pt-20">
+  <div class="mx-auto max-w-7xl px-4 pb-24 pt-14 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-wider text-brand-bright">{t(lang, 'nav.contact')}</p>
+    <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-white md:text-5xl">{t(lang, 'contact.h1')}</h1>
+    <p class="mt-5 max-w-2xl text-lg font-light text-white/75">{t(lang, 'contact.intro')}</p>
+  </div>
+</section>
+
+<section class="bg-white py-20">
+  <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-5 lg:px-8">
+    <div class="lg:col-span-2">
+      <div class="space-y-6">
+        {cards.map((card) => (
+          <div class="flex items-center gap-4">
+            <div class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+              <Icon name={card.icon} class="h-6 w-6" />
+            </div>
+            <div>
+              <div class="text-sm font-semibold uppercase tracking-wider text-ink/50">{card.label}</div>
+              {card.href
+                ? <a href={card.href} class="font-semibold text-ink transition-colors hover:text-brand">{card.value}</a>
+                : <div class="font-semibold text-ink">{card.value}</div>}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="mt-8 text-sm font-medium text-ink/60">{t(lang, 'contact.replyNote')}</p>
+    </div>
+    <div class="lg:col-span-3">
+      <ContactForm lang={lang} />
+    </div>
+  </div>
+</section>

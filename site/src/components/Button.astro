@@ -1,5 +1,5 @@
 ---
-const { href, type, variant = 'primary', class: className = '' } = Astro.props;
+const { href, type, variant = 'primary', class: className = '', ...rest } = Astro.props;
 
 const base =
   'inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-base font-semibold transition-colors';
@@ -12,5 +12,5 @@ const variants = {
 const cls = `${base} ${variants[variant]} ${className}`;
 ---
 {href
-  ? <a href={href} class={cls}><slot /></a>
-  : <button type={type ?? 'submit'} class={cls}><slot /></button>}
+  ? <a href={href} class={cls} {...rest}><slot /></a>
+  : <button type={type ?? 'submit'} class={cls} {...rest}><slot /></button>}

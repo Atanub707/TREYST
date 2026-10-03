@@ -144,3 +144,20 @@ test('about page renders (EN)', async () => {
   assert.match(html, /Not just a supplier\./);
   assert.match(html, /A teammate\./);
 });
+
+test('contact page has the form (FO)', async () => {
+  const html = await readDist('samband/index.html');
+  assert.match(html, /name="name"/);
+  assert.match(html, /name="club"/);
+  assert.match(html, /name="email"/);
+  assert.match(html, /name="message"/);
+  assert.match(html, /data-msg-success/);
+  assert.match(html, /aria-live="polite"/);
+  assert.match(html, /honeypot/);
+});
+
+test('contact page has the form (EN)', async () => {
+  const html = await readDist('en/contact/index.html');
+  assert.match(html, /Get in touch/);
+  assert.match(html, /name="message"/);
+});

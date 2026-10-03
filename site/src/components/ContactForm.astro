@@ -1,0 +1,154 @@
+---
+import Button from './Button.astro';
+import { t } from '../i18n/utils.mjs';
+import { services } from '../data/services.mjs';
+
+const { lang } = Astro.props;
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+const topics = [
+  ...services.map((s) => ({ value: s.id, label: t(lang, `${s.key}.title`) })),
+  { value: 'other', label: t(lang, 'form.topic.other') },
+];
+const field =
+  'mt-2 w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-ink transition-colors focus:border-brand focus:outline-none';
+const label = 'block text-sm font-semibold text-ink/70';
+---
+<form
+  data-contact-form
+  data-endpoint={endpoint}
+  data-msg-required={t(lang, 'form.required')}
+  data-msg-invalid={t(lang, 'form.invalidEmail')}
+  data-msg-success={t(lang, 'form.success')}
+  data-msg-error={t(lang, 'form.error')}
+  data-msg-submitting={t(lang, 'form.submitting')}
+  data-msg-subject={t(lang, 'form.mailSubject')}
+  data-label-name={t(lang, 'form.name')}
+  data-label-club={t(lang, 'form.club')}
+  data-label-email={t(lang, 'form.email')}
+  data-label-phone={t(lang, 'form.phone')}
+  data-label-topic={t(lang, 'form.topic')}
+  novalidate
+  class="rounded-3xl border border-ink/5 bg-fog p-8"
+>
+  <div class="grid gap-6 sm:grid-cols-2">
+    <div>
+      <label class={label} for="cf-name">{t(lang, 'form.name')} *</label>
+      <input class={field} id="cf-name" name="name" type="text" required autocomplete="name" />
+    </div>
+    <div>
+      <label class={label} for="cf-club">{t(lang, 'form.club')}</label>
+      <input class={field} id="cf-club" name="club" type="text" autocomplete="organization" />
+    </div>
+    <div>
+      <label class={label} for="cf-email">{t(lang, 'form.email')} *</label>
+      <input class={field} id="cf-email" name="email" type="email" required autocomplete="email" />
+    </div>
+    <div>
+      <label class={label} for="cf-phone">{t(lang, 'form.phone')}</label>
+      <input class={field} id="cf-phone" name="phone" type="tel" autocomplete="tel" />
+    </div>
+    <div class="sm:col-span-2">
+      <label class={label} for="cf-topic">{t(lang, 'form.topic')}</label>
+      <select class={field} id="cf-topic" name="topic">
+        {topics.map((topic) => <option value={topic.value}>{topic.label}</option>)}
+      </select>
+    </div>
+    <div class="sm:col-span-2">
+      <label class={label} for="cf-message">{t(lang, 'form.message')} *</label>
+      <textarea class={field} id="cf-message" name="message" rows="5" required></textarea>
+    </div>
+  </div>
+  <div class="honeypot" aria-hidden="true">
+    <label>Company <input name="company" type="text" tabindex="-1" autocomplete="off" /></label>
+  </div>
+  <div class="mt-8 flex items-center gap-4">
+    <Button type="submit" variant="primary" class="px-8" data-submit>{t(lang, 'form.submit')}</Button>
+    <p data-status role="status" aria-live="polite" class="text-sm font-medium"></p>
+  </div>
+</form>
+
+<style>
+  .honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  const form = document.querySelector('[data-contact-form]');
+  if (form) {
+    const status = form.querySelector('[data-status]');
+    const submit = form.querySelector('[data-submit]');
+    const msg = (name) => form.getAttribute(`data-msg-${name}`) || '';
+    const label = (name) => form.getAttribute(`data-label-${name}`) || '';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const message = String(data.get('message') || '').trim();
+      const honeypot = String(data.get('company') || '').trim();
+
+      if (honeypot) return; // silently drop bots
+
+      if (!name || !email || !message) {
+        status.textContent = msg('required');
+        status.className = 'text-sm font-medium text-red-600';
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        status.textContent = msg('invalid');
+        status.className = 'text-sm font-medium text-red-600';
+        return;
+      }
+
+      const payload = {
+        name,
+        club: String(data.get('club') || '').trim(),
+        email,
+        phone: String(data.get('phone') || '').trim(),
+        topic: String(data.get('topic') || ''),
+        message,
+      };
+
+      const endpoint = form.getAttribute('data-endpoint');
+
+      if (!endpoint) {
+        const subject = encodeURIComponent(`${msg('subject')} ${name}`);
+        const body = encodeURIComponent(
+          `${label('name')}: ${name}\n${label('club')}: ${payload.club}\n${label('email')}: ${email}\n${label('phone')}: ${payload.phone}\n${label('topic')}: ${payload.topic}\n\n${message}`
+        );
+        window.location.href = `mailto:info@treyst.fo?subject=${subject}&body=${body}`;
+        status.textContent = msg('success');
+        status.className = 'text-sm font-medium text-brand';
+        return;
+      }
+
+      submit.disabled = true;
+      status.textContent = msg('submitting');
+      status.className = 'text-sm font-medium text-ink/60';
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        form.reset();
+        status.textContent = msg('success');
+        status.className = 'text-sm font-medium text-brand';
+      } catch {
+        status.textContent = msg('error');
+        status.className = 'text-sm font-medium text-red-600';
+      } finally {
+        submit.disabled = false;
+      }
+    });
+  }
+</script>
