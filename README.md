@@ -43,6 +43,16 @@ Static build — deploy `site/dist/` anywhere:
 
 `astro.config.mjs` sets `site: 'https://treyst.fo'` — update it if the domain changes so sitemap/canonical URLs stay correct.
 
+## Try-on page (Phase A)
+
+`/roynd` (EN: `/en/try-on`) shows the jersey collection. Each card links to the quote form with
+`?kit=<slug>`, which prefills "Interested in: <name>".
+
+- Swap jerseys: replace files in `site/src/assets/jerseys/` (same names), update `src/data/jerseys.mjs`
+  and the names in `src/i18n/ui.mjs` (`jersey.n1`…), and refresh `CREDITS.md`.
+- Phase B: the live try-on (Anywear widget) is wired when the client's Anywear account/script exists —
+  the jersey data is already shaped for it (slug + image).
+
 ## Swapping assets
 
 - Photos: replace files in `site/src/assets/photos/` keeping the same names (hero, apparel, equipment, printing, clubshop, about, philosophy), then rebuild.
