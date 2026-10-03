@@ -13,7 +13,7 @@
 - Only dependencies listed above; no animation libraries, no third-party JS, no CSS frameworks beyond Tailwind.
 - JS budget: total gzipped `dist/_astro/*.js` < 35 KB.
 - Copy: every user-visible string comes from `src/i18n/ui.mjs` (FO + EN). No hardcoded user-visible strings in components.
-- Token names (Tailwind v4 `@theme`): `fjord` `#0C1512`, `fjord-soft` `#16211D`, `brand` `#0F766E`, `brand-bright` `#2DD4BF`, `fog` `#F6F5F1`, `ink` `#101814`. No other accent hues.
+- Token names (Tailwind v4 `@theme`): `fjord` `#0C1512`, `fjord-soft` `#16211D`, `brand` `#0F766E`, `brand-bright` `#2DD4BF`, `fog` `#F6F5F1`, `ink` `#101814`, plus the semantic status token `danger` `#B91C1C` (error text only). No other accent hues.
 - Fonts: `"Archivo Variable"` display/wordmark, `"Inter Variable"` body (fontsource variable packages).
 - FO pages at root; EN under `/en/`. Route pairs are the single source of truth in `src/i18n/utils.mjs` (`ROUTE_PAIRS`).
 - Every page starts with a dark (`fjord`) top area so the transparent-to-solid nav works everywhere.
@@ -283,6 +283,7 @@ Expected: FAIL — no CSS link, no `.skip-link`, no `<main id="main">`.
   --color-brand-bright: #2DD4BF;
   --color-fog: #F6F5F1;
   --color-ink: #101814;
+  --color-danger: #B91C1C;
 
   --font-display: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
@@ -2891,12 +2892,12 @@ const label = 'block text-sm font-semibold text-ink/70';
 
       if (!name || !email || !message) {
         status.textContent = msg('required');
-        status.className = 'text-sm font-medium text-red-600';
+        status.className = 'text-sm font-medium text-danger';
         return;
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         status.textContent = msg('invalid');
-        status.className = 'text-sm font-medium text-red-600';
+        status.className = 'text-sm font-medium text-danger';
         return;
       }
 
@@ -2938,7 +2939,7 @@ const label = 'block text-sm font-semibold text-ink/70';
         status.className = 'text-sm font-medium text-brand';
       } catch {
         status.textContent = msg('error');
-        status.className = 'text-sm font-medium text-red-600';
+        status.className = 'text-sm font-medium text-danger';
       } finally {
         submit.disabled = false;
       }
