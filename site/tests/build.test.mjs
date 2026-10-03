@@ -199,6 +199,13 @@ test('hreflang pairs are reciprocal on every page', async () => {
   }
 });
 
+test('jersey assets exist and are non-trivial', async () => {
+  const url = new URL('../src/data/jerseys.mjs', import.meta.url);
+  await access(url); // throws if missing
+  const credits = new URL('../src/assets/jerseys/CREDITS.md', import.meta.url);
+  await access(credits);
+});
+
 test('sitemap, robots and JSON-LD are present', async () => {
   assert.equal(await exists('sitemap-index.xml'), true, 'sitemap-index.xml should exist');
   const robots = await readDist('robots.txt');
