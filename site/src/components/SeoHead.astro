@@ -1,5 +1,5 @@
 ---
-const { lang, title, description, path, altPath } = Astro.props;
+const { lang, title, description, path, altPath, jsonLd } = Astro.props;
 const site = Astro.site ?? new URL('https://treyst.fo');
 const canonical = new URL(path, site).href;
 const alt = new URL(altPath, site).href;
@@ -23,3 +23,4 @@ const fullTitle = title === 'TREYST' ? title : `${title} | TREYST`;
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={new URL('/og-image.png', site).href} />
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

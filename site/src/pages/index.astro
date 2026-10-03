@@ -4,6 +4,21 @@ import HomePage from '../components/HomePage.astro';
 import { t } from '../i18n/utils.mjs';
 
 const lang = 'fo';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'TREYST',
+  description: t(lang, 'meta.home.description'),
+  url: 'https://treyst.fo/',
+  email: 'info@treyst.fo',
+  telephone: '+298504082',
+  address: { '@type': 'PostalAddress', addressLocality: 'Hoyvík', addressCountry: 'FO' },
+  areaServed: { '@type': 'Country', name: 'Føroyar' },
+  makesOffer: ['Klæðir', 'Útgerð', 'Prenting', 'Club Shop'].map((name) => ({
+    '@type': 'Offer',
+    itemOffered: { '@type': 'Service', name },
+  })),
+};
 ---
 <BaseLayout
   lang={lang}
@@ -11,6 +26,7 @@ const lang = 'fo';
   description={t(lang, 'meta.home.description')}
   path="/"
   altPath="/en/"
+  jsonLd={jsonLd}
 >
   <HomePage lang={lang} />
 </BaseLayout>

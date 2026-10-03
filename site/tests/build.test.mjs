@@ -198,3 +198,13 @@ test('hreflang pairs are reciprocal on every page', async () => {
     assert.ok(enHtml.includes(`hreflang="x-default" href="${foUrl}"`), `${enFile}: missing x-default`);
   }
 });
+
+test('sitemap, robots and JSON-LD are present', async () => {
+  assert.equal(await exists('sitemap-index.xml'), true, 'sitemap-index.xml should exist');
+  const robots = await readDist('robots.txt');
+  assert.match(robots, /Sitemap: https:\/\/treyst\.fo\/sitemap-index\.xml/);
+  const html = await readDist('index.html');
+  assert.match(html, /application\/ld\+json/);
+  assert.match(html, /"@type":"LocalBusiness"/);
+  assert.equal(await exists('og-image.png'), true, 'og-image.png should exist');
+});
