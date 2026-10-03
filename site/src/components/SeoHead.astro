@@ -1,0 +1,25 @@
+---
+const { lang, title, description, path, altPath } = Astro.props;
+const site = Astro.site ?? new URL('https://treyst.fo');
+const canonical = new URL(path, site).href;
+const alt = new URL(altPath, site).href;
+const locales = { fo: 'fo_FO', en: 'en_US' };
+const fullTitle = title === 'TREYST' ? title : `${title} | TREYST`;
+---
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<link rel="alternate" hreflang="fo" href={lang === 'fo' ? canonical : alt} />
+<link rel="alternate" hreflang="en" href={lang === 'en' ? canonical : alt} />
+<link rel="alternate" hreflang="x-default" href={lang === 'fo' ? canonical : alt} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="TREYST" />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={new URL('/og-image.png', site).href} />
+<meta property="og:locale" content={locales[lang]} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL('/og-image.png', site).href} />
