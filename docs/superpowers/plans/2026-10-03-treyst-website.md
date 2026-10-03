@@ -355,10 +355,13 @@ const fullTitle = title === 'TREYST' ? title : `${title} | TREYST`;
 ```astro
 ---
 import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 import SeoHead from '../components/SeoHead.astro';
+import { t } from '../i18n/utils.mjs';
 
 const { lang = 'fo', title, description, path, altPath } = Astro.props;
-const skip = lang === 'fo' ? 'Hoppa til innihalds' : 'Skip to content';
+const skip = t(lang, 'skip');
 ---
 <!doctype html>
 <html lang={lang}>
@@ -951,8 +954,7 @@ git commit -m "feat(site): FO/EN dictionaries, i18n utils and services data"
 
 **Files:**
 - Create: `site/src/components/Icon.astro`, `site/src/components/Button.astro`, `site/src/components/LanguageSwitcher.astro`, `site/src/components/Nav.astro`, `site/src/components/Footer.astro`
-- Modify: `site/src/styles/global.css` (nav scroll styles)
-- Modify: `site/src/layouts/BaseLayout.astro` (render Nav + Footer)
+- Modify: `site/src/i18n/ui.mjs` (add shared value keys), `site/src/styles/global.css` (nav scroll styles), `site/src/layouts/BaseLayout.astro` (render Nav + Footer, dictionary-driven skip link)
 - Test: `site/tests/build.test.mjs` (extend)
 
 **Interfaces:**
@@ -983,6 +985,18 @@ test('english nav links point to english pages', async () => {
 
 Run: `npm test`
 Expected: FAIL — no `data-nav`, no footer email on built pages.
+
+- [ ] **Step 2b: Add shared value keys to `site/src/i18n/ui.mjs`**
+
+All contact values shown as visible text must come from the dictionary (Global Constraint). Insert after the `'lang.switchLabel'` entry:
+
+```js
+  'skip': { fo: 'Hoppa til innihalds', en: 'Skip to content' },
+  'contact.emailValue': { fo: 'info@treyst.fo', en: 'info@treyst.fo' },
+  'contact.phoneValue': { fo: '+298 504082', en: '+298 504082' },
+```
+
+(Hrefs such as `mailto:info@treyst.fo` remain literal — they are functional targets, not copy.)
 
 - [ ] **Step 3: Create `site/src/components/Icon.astro`**
 
@@ -1145,7 +1159,7 @@ const link = 'text-sm font-medium text-white/80 transition-colors hover:text-whi
       <Button href={contact} variant="primary" class="w-full">{t(lang, 'nav.cta')}</Button>
       <div class="mt-6 flex items-center gap-3 text-sm text-white/60">
         <Icon name="mail" class="h-4 w-4" />
-        <a href="mailto:info@treyst.fo" class="hover:text-white">info@treyst.fo</a>
+        <a href="mailto:info@treyst.fo" class="hover:text-white">{t(lang, 'contact.emailValue')}</a>
       </div>
     </div>
   </div>
@@ -1214,11 +1228,11 @@ const link = 'text-sm text-white/70 transition-colors hover:text-white';
         <ul class="mt-4 space-y-3 text-sm text-white/70">
           <li class="flex items-center gap-2">
             <Icon name="mail" class="h-4 w-4 shrink-0" />
-            <a href="mailto:info@treyst.fo" class="transition-colors hover:text-white">info@treyst.fo</a>
+            <a href="mailto:info@treyst.fo" class="transition-colors hover:text-white">{t(lang, 'contact.emailValue')}</a>
           </li>
           <li class="flex items-center gap-2">
             <Icon name="phone" class="h-4 w-4 shrink-0" />
-            <a href="tel:+298504082" class="transition-colors hover:text-white">+298 504082</a>
+            <a href="tel:+298504082" class="transition-colors hover:text-white">{t(lang, 'contact.phoneValue')}</a>
           </li>
           <li class="flex items-center gap-2">
             <Icon name="pin" class="h-4 w-4 shrink-0" />
@@ -2616,8 +2630,8 @@ import { t } from '../i18n/utils.mjs';
 
 const { lang } = Astro.props;
 const contactCards = [
-  { icon: 'mail', label: t(lang, 'contact.email'), value: 'info@treyst.fo', href: 'mailto:info@treyst.fo' },
-  { icon: 'phone', label: t(lang, 'contact.phone'), value: '+298 504082', href: 'tel:+298504082' },
+  { icon: 'mail', label: t(lang, 'contact.email'), value: t(lang, 'contact.emailValue'), href: 'mailto:info@treyst.fo' },
+  { icon: 'phone', label: t(lang, 'contact.phone'), value: t(lang, 'contact.phoneValue'), href: 'tel:+298504082' },
   { icon: 'pin', label: t(lang, 'contact.location'), value: t(lang, 'contact.locationValue'), href: null },
 ];
 ---
@@ -2943,8 +2957,8 @@ import { t } from '../i18n/utils.mjs';
 
 const { lang } = Astro.props;
 const cards = [
-  { icon: 'mail', label: t(lang, 'contact.email'), value: 'info@treyst.fo', href: 'mailto:info@treyst.fo' },
-  { icon: 'phone', label: t(lang, 'contact.phone'), value: '+298 504082', href: 'tel:+298504082' },
+  { icon: 'mail', label: t(lang, 'contact.email'), value: t(lang, 'contact.emailValue'), href: 'mailto:info@treyst.fo' },
+  { icon: 'phone', label: t(lang, 'contact.phone'), value: t(lang, 'contact.phoneValue'), href: 'tel:+298504082' },
   { icon: 'pin', label: t(lang, 'contact.location'), value: t(lang, 'contact.locationValue'), href: null },
 ];
 ---
