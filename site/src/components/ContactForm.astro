@@ -98,12 +98,12 @@ const label = 'block text-sm font-semibold text-ink/70';
 
       if (!name || !email || !message) {
         status.textContent = msg('required');
-        status.className = 'text-sm font-medium text-red-600';
+        status.className = 'text-sm font-medium text-danger';
         return;
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         status.textContent = msg('invalid');
-        status.className = 'text-sm font-medium text-red-600';
+        status.className = 'text-sm font-medium text-danger';
         return;
       }
 
@@ -145,7 +145,7 @@ const label = 'block text-sm font-semibold text-ink/70';
         status.className = 'text-sm font-medium text-brand';
       } catch {
         status.textContent = msg('error');
-        status.className = 'text-sm font-medium text-red-600';
+        status.className = 'text-sm font-medium text-danger';
       } finally {
         submit.disabled = false;
       }
