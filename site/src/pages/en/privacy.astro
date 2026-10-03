@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LegalPage from '../../components/LegalPage.astro';
+import { t } from '../../i18n/utils.mjs';
+
+const lang = 'en';
+const paragraphs = [t(lang, 'legal.privacy.p1'), t(lang, 'legal.privacy.p2')];
+---
+<BaseLayout
+  lang={lang}
+  title={t(lang, 'meta.privacy.title')}
+  description={t(lang, 'meta.privacy.description')}
+  path="/en/privacy"
+  altPath="/privatlivspolitikkur"
+>
+  <LegalPage lang={lang} title={t(lang, 'meta.privacy.title')} paragraphs={paragraphs} />
+</BaseLayout>

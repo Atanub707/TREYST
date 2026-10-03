@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NotFoundPage from '../components/NotFoundPage.astro';
+import { t } from '../i18n/utils.mjs';
+
+const lang = 'fo';
+---
+<BaseLayout
+  lang={lang}
+  title={t(lang, 'notfound.title')}
+  description={t(lang, 'notfound.desc')}
+  path="/404"
+  altPath="/en/404"
+>
+  <NotFoundPage lang={lang} />
+</BaseLayout>

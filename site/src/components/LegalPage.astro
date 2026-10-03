@@ -1,0 +1,18 @@
+---
+import { t } from '../i18n/utils.mjs';
+
+const { lang, title, paragraphs } = Astro.props;
+---
+<section class="bg-fjord pt-20">
+  <div class="mx-auto max-w-7xl px-4 pb-16 pt-14 sm:px-6 lg:px-8">
+    <h1 class="text-4xl font-extrabold tracking-tight text-white md:text-5xl">{title}</h1>
+  </div>
+</section>
+<section class="bg-white py-16">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <p class="rounded-xl bg-fog p-4 text-sm text-ink/60">{t(lang, 'legal.stubNote')}</p>
+    <div class="mt-8 space-y-6 text-lg leading-relaxed text-ink/80">
+      {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </div>
+</section>

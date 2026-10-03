@@ -161,3 +161,40 @@ test('contact page has the form (EN)', async () => {
   assert.match(html, /Get in touch/);
   assert.match(html, /name="message"/);
 });
+
+test('legal pages and 404 render', async () => {
+  assert.equal(await exists('treytir/index.html'), true);
+  assert.equal(await exists('privatlivspolitikkur/index.html'), true);
+  assert.equal(await exists('en/terms/index.html'), true);
+  assert.equal(await exists('en/privacy/index.html'), true);
+  assert.equal(await exists('404.html'), true);
+  const notFound = await readDist('404.html');
+  assert.match(notFound, /Síðan varð ikki funnin\./);
+});
+
+const PAIRS = [
+  ['index.html', 'en/index.html', '/', '/en/'],
+  ['klaedir/index.html', 'en/apparel/index.html', '/klaedir', '/en/apparel'],
+  ['utgerd/index.html', 'en/equipment/index.html', '/utgerd', '/en/equipment'],
+  ['prenting/index.html', 'en/printing/index.html', '/prenting', '/en/printing'],
+  ['club-shop/index.html', 'en/club-shop/index.html', '/club-shop', '/en/club-shop'],
+  ['um-okkum/index.html', 'en/about/index.html', '/um-okkum', '/en/about'],
+  ['samband/index.html', 'en/contact/index.html', '/samband', '/en/contact'],
+  ['treytir/index.html', 'en/terms/index.html', '/treytir', '/en/terms'],
+  ['privatlivspolitikkur/index.html', 'en/privacy/index.html', '/privatlivspolitikkur', '/en/privacy'],
+];
+
+test('hreflang pairs are reciprocal on every page', async () => {
+  for (const [foFile, enFile, foPath, enPath] of PAIRS) {
+    const foHtml = await readDist(foFile);
+    const enHtml = await readDist(enFile);
+    const foUrl = `https://treyst.fo${foPath}`;
+    const enUrl = `https://treyst.fo${enPath}`;
+    assert.ok(foHtml.includes(`hreflang="fo" href="${foUrl}"`), `${foFile}: missing fo hreflang`);
+    assert.ok(foHtml.includes(`hreflang="en" href="${enUrl}"`), `${foFile}: missing en hreflang`);
+    assert.ok(foHtml.includes(`hreflang="x-default" href="${foUrl}"`), `${foFile}: missing x-default`);
+    assert.ok(enHtml.includes(`hreflang="fo" href="${foUrl}"`), `${enFile}: missing fo hreflang`);
+    assert.ok(enHtml.includes(`hreflang="en" href="${enUrl}"`), `${enFile}: missing en hreflang`);
+    assert.ok(enHtml.includes(`hreflang="x-default" href="${foUrl}"`), `${enFile}: missing x-default`);
+  }
+});

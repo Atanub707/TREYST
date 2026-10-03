@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LegalPage from '../../components/LegalPage.astro';
+import { t } from '../../i18n/utils.mjs';
+
+const lang = 'en';
+const paragraphs = [t(lang, 'legal.terms.p1'), t(lang, 'legal.terms.p2')];
+---
+<BaseLayout
+  lang={lang}
+  title={t(lang, 'meta.terms.title')}
+  description={t(lang, 'meta.terms.description')}
+  path="/en/terms"
+  altPath="/treytir"
+>
+  <LegalPage lang={lang} title={t(lang, 'meta.terms.title')} paragraphs={paragraphs} />
+</BaseLayout>

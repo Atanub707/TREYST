@@ -1,0 +1,20 @@
+---
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { t, localizePath } from '../i18n/utils.mjs';
+
+const { lang } = Astro.props;
+const home = localizePath('/', lang);
+---
+<section class="flex min-h-[80vh] items-center bg-fjord pt-20">
+  <div class="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6 lg:px-8">
+    <p class="font-display text-7xl font-extrabold text-brand-bright">404</p>
+    <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl">{t(lang, 'notfound.title')}</h1>
+    <p class="mt-5 text-lg font-light text-white/70">{t(lang, 'notfound.desc')}</p>
+    <div class="mt-10 flex justify-center">
+      <Button href={home} variant="primary">
+        {t(lang, 'notfound.home')} <Icon name="arrow" class="h-5 w-5" />
+      </Button>
+    </div>
+  </div>
+</section>
