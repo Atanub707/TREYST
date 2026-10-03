@@ -13,7 +13,7 @@ const { title, items, numbered = false } = Astro.props;
         <Reveal delay={i % 2} class="h-full">
           <div class="flex h-full gap-5 rounded-2xl border border-ink/5 bg-fog p-7">
             {numbered ? (
-              <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center font-display text-xl font-extrabold text-brand/40">0{i + 1}</span>
+              <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center font-display text-xl font-extrabold text-brand/80">0{i + 1}</span>
             ) : (
               <div class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
                 <Icon name="check" class="h-6 w-6" />
