@@ -105,18 +105,20 @@ test('equipment page renders (EN)', async () => {
   assert.match(html, /href="\/en\/contact"/);
 });
 
-test('printing page includes the jersey customizer (FO)', async () => {
+test('printing page keeps service content and drops the customizer (FO)', async () => {
   const html = await readDist('prenting/index.html');
-  assert.match(html, /data-customizer/);
-  assert.match(html, /data-jersey-body/);
-  assert.match(html, /data-name-input/);
-  assert.match(html, /name="jersey-color"/);
+  assert.match(html, /Prenting/);
+  assert.match(html, /Hvat vit bjóða/);
+  assert.match(html, /Nøvn/);
+  assert.doesNotMatch(html, /data-customizer/);
+  assert.doesNotMatch(html, /jersey-color/);
 });
 
-test('printing page includes the jersey customizer (EN)', async () => {
+test('printing page keeps service content and drops the customizer (EN)', async () => {
   const html = await readDist('en/printing/index.html');
-  assert.match(html, /data-customizer/);
-  assert.match(html, /Try it yourself/);
+  assert.match(html, /Names/);
+  assert.doesNotMatch(html, /data-customizer/);
+  assert.doesNotMatch(html, /Try it yourself/);
 });
 
 test('club shop page renders steps (FO)', async () => {
