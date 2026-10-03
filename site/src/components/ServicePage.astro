@@ -4,6 +4,7 @@ import CapabilityGrid from './CapabilityGrid.astro';
 import Accordion from './Accordion.astro';
 import RelatedServices from './RelatedServices.astro';
 import CtaBand from './CtaBand.astro';
+import TryOnCta from './TryOnCta.astro';
 import JerseyCustomizer from './JerseyCustomizer.astro';
 import SectionHeading from './SectionHeading.astro';
 import { serviceById } from '../data/services.mjs';
@@ -22,6 +23,7 @@ const base = `svc.${id}`;
   image={photos[service.image]}
 />
 <CapabilityGrid title={t(lang, 'svc.capabilities')} items={t(lang, `${base}.capabilities`)} numbered={id === 'clubshop'} />
+{id === 'apparel' && <TryOnCta lang={lang} />}
 {id === 'printing' && <JerseyCustomizer lang={lang} />}
 <section class="bg-white pb-24">
   <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">

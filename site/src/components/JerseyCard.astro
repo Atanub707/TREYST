@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { t } from '../i18n/utils.mjs';
+
+const { lang, jersey, contactPath } = Astro.props;
+const name = t(lang, jersey.nameKey);
+const href = `${contactPath}?kit=${jersey.slug}`;
+---
+<article data-jersey-card class="group flex flex-col overflow-hidden rounded-3xl border border-ink/5 bg-white transition-shadow duration-300 hover:shadow-xl">
+  <div class="relative aspect-[4/5] overflow-hidden bg-fog">
+    <Image
+      src={jersey.image}
+      alt={name}
+      widths={[400, 640]}
+      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+      loading="lazy"
+      class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+  </div>
+  <div class="flex flex-1 flex-col p-5">
+    <h2 class="text-lg font-bold text-ink">{name}</h2>
+    <a href={href} class="mt-3 inline-flex items-center gap-2 font-semibold text-brand transition-colors hover:text-brand/80">
+      {t(lang, 'tryon.inquiry')}
+      <Icon name="arrow" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+    </a>
+  </div>
+</article>

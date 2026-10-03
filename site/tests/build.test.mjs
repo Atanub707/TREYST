@@ -182,6 +182,7 @@ const PAIRS = [
   ['samband/index.html', 'en/contact/index.html', '/samband', '/en/contact'],
   ['treytir/index.html', 'en/terms/index.html', '/treytir', '/en/terms'],
   ['privatlivspolitikkur/index.html', 'en/privacy/index.html', '/privatlivspolitikkur', '/en/privacy'],
+  ['roynd/index.html', 'en/try-on/index.html', '/roynd', '/en/try-on'],
 ];
 
 test('hreflang pairs are reciprocal on every page', async () => {
@@ -226,4 +227,25 @@ test('try-on is discoverable from nav and footer (EN)', async () => {
   const html = await readDist('en/index.html');
   assert.match(html, /href="\/en\/try-on"/);
   assert.match(html, /Try on/);
+});
+
+test('try-on page renders the gallery (FO)', async () => {
+  const html = await readDist('roynd/index.html');
+  assert.match(html, /<html lang="fo"/);
+  assert.match(html, /Royn búnan á tær/);
+  assert.equal((html.match(/data-jersey-card/g) || []).length, 12);
+  assert.match(html, /href="\/samband\?kit=jersey-01"/);
+});
+
+test('try-on page renders the gallery (EN)', async () => {
+  const html = await readDist('en/try-on/index.html');
+  assert.match(html, /<html lang="en"/);
+  assert.match(html, /Try the kit on you/);
+  assert.match(html, /href="\/en\/contact\?kit=jersey-01"/);
+});
+
+test('apparel page links to the try-on collection (FO)', async () => {
+  const html = await readDist('klaedir/index.html');
+  assert.match(html, /href="\/roynd"/);
+  assert.match(html, /Sí savnið/);
 });

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TryOnPage from '../../components/TryOnPage.astro';
+import { t } from '../../i18n/utils.mjs';
+
+const lang = 'en';
+---
+<BaseLayout
+  lang={lang}
+  title={t(lang, 'meta.tryon.title')}
+  description={t(lang, 'meta.tryon.description')}
+  path="/en/try-on"
+  altPath="/roynd"
+>
+  <TryOnPage lang={lang} />
+</BaseLayout>
