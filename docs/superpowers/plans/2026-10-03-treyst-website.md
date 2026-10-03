@@ -1308,7 +1308,7 @@ git commit -m "feat(site): nav, footer, language switcher, button and icon compo
 
 **Interfaces:**
 - Consumes: nothing.
-- Produces: `photos` map from `site/src/data/photos.mjs` exporting Astro image metadata: keys `hero`, `apparel`, `equipment`, `printing`, `clubshop`, `about`, `philosophy`, `contact`. Components import it and pass values to `astro:assets` `<Image src={...}>`.
+- Produces: `photos` map from `site/src/data/photos.mjs` exporting Astro image metadata: keys `hero`, `apparel`, `equipment`, `printing`, `clubshop`, `about`, `philosophy`. Components import it and pass values to `astro:assets` `<Image src={...}>`.
 
 Required files (exact names): `hero.jpg`, `apparel.jpg`, `equipment.jpg`, `printing.jpg`, `clubshop.jpg`, `about.jpg`, `philosophy.jpg`.
 
