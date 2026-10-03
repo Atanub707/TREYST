@@ -1847,13 +1847,13 @@ const steps = [1, 2, 3, 4].map((n) => ({
     <SectionHeading title={t(lang, 'process.title')} />
     <ol class="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
       {steps.map((step, i) => (
-        <Reveal delay={i % 4}>
-          <li class="border-t border-ink/10 pt-6">
+        <li class="border-t border-ink/10 pt-6">
+          <Reveal delay={i % 4}>
             <span class="font-display text-5xl font-extrabold text-brand/25">0{i + 1}</span>
             <h3 class="mt-4 text-xl font-bold text-ink">{step.title}</h3>
             <p class="mt-2 leading-relaxed text-ink/70">{step.desc}</p>
-          </li>
-        </Reveal>
+          </Reveal>
+        </li>
       ))}
     </ol>
   </div>
